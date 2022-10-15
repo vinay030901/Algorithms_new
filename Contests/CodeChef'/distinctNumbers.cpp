@@ -49,40 +49,11 @@ const ld EPS = 1e-9;
 
 void solve()
 {
-    int n;
-    cin >> n;
+    int n, k;
+    cin >> n >> k;
     vector<int> v(n);
-    for (int i = 0; i < n; i++) cin >> v[i];
-    int mn = n, count = 0, temp = 0,sum=0;
-    for(auto it:v) sum+=it;
-
-    for (int i = 0; i < n; i++)
-    {
-        temp += v[i];
-        count++;
-        int temp_max = 0;
-        if (sum % temp == 0)
-        {
-            temp_max = count;
-            int temp_sum = 0, temp_count = 0;
-            for (int j = i + 1; j < n; j++)
-            {
-                temp_sum += v[j];
-                temp_count++;
-                if (temp_sum == temp)
-                {
-                    temp_max = max(temp_max, temp_count);
-                    temp_count = 0;
-                    temp_sum = 0;
-                }
-            }
-            if (temp_sum == 0)
-            {
-                mn = min(mn, temp_max);
-            }
-        }
-    }
-    cout << mn << "\n";
+    fr(n) cin >> v[i];
+    
 }
 int32_t main()
 {

@@ -52,37 +52,25 @@ void solve()
     int n;
     cin >> n;
     vector<int> v(n);
-    for (int i = 0; i < n; i++) cin >> v[i];
-    int mn = n, count = 0, temp = 0,sum=0;
-    for(auto it:v) sum+=it;
-
-    for (int i = 0; i < n; i++)
+    fr(n) cin >> v[i];
+    vi b(n, 0);
+    fr(n / 2)
     {
-        temp += v[i];
-        count++;
-        int temp_max = 0;
-        if (sum % temp == 0)
-        {
-            temp_max = count;
-            int temp_sum = 0, temp_count = 0;
-            for (int j = i + 1; j < n; j++)
-            {
-                temp_sum += v[j];
-                temp_count++;
-                if (temp_sum == temp)
-                {
-                    temp_max = max(temp_max, temp_count);
-                    temp_count = 0;
-                    temp_sum = 0;
-                }
-            }
-            if (temp_sum == 0)
-            {
-                mn = min(mn, temp_max);
-            }
-        }
+        b[i] = v[n - i - 1] - v[i];
     }
-    cout << mn << "\n";
+    bool f = true;
+    if (b[0] < 0)
+        f = false;
+    for (int i = 0; i < n / 2; i++)
+        if (b[i] < 0 || b[i] < b[i + 1])
+        {
+            f = false;
+            break;
+        }
+    if (f == false)
+        cout << "-1\n";
+    else
+        cout << b[0] << endl;
 }
 int32_t main()
 {

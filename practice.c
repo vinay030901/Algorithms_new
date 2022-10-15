@@ -1,6 +1,10 @@
 #include<stdio.h>
-int main()
+void main()
 {
-    enum{Student =5, connecting,college=4,company};
-    printf("Company: %d\n",company);
+    int n = 5;
+      int arr[n] = {1,2,3,4,5};
+      printf("%d" , arr[4]);
+      int n;
+      scanf("%d",&n);
+      int arr[n];
 }

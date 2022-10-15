@@ -10,7 +10,7 @@ int main()
     {
         cout << intervals[i].first << " " << intervals[i].second << "\n";
     }
-    for (int i = 0; i <= 8; i++)
+    for (int i = 0; i <= intervals.size(); i++)
     {
         if (intervals[i].second > intervals[i + 1].first)
         {
@@ -28,23 +28,23 @@ int main()
 
     /*leetcode
     int ind=0;
-        int n=intervals.size();
-        for(int i=1;i<n;i++)
+    int n=intervals.size();
+    for(int i=1;i<n;i++)
+    {
+        if(intervals[ind][1]>=intervals[i][0])
         {
-            if(intervals[ind][1]>=intervals[i][0])
-            {
-                intervals[ind][1]=max(intervals[ind][1],intervals[i][1]);
-            }
-            else
-            {
-                ind++;
-                intervals[ind]=intervals[i];
-            }
+            intervals[ind][1]=max(intervals[ind][1],intervals[i][1]);
         }
-        vector<vector<int>>ans;
-        for(int i=0;i<=ind;i++)
+        else
         {
-            ans.push_back(intervals[i]);
+            ind++;
+            intervals[ind]=intervals[i];
         }
-        return ans;*/
+    }
+    vector<vector<int>>ans;
+    for(int i=0;i<=ind;i++)
+    {
+        ans.push_back(intervals[i]);
+    }
+    return ans;*/
 }
