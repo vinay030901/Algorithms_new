@@ -48,20 +48,9 @@ const int INF = 1e9;
 const ld EPS = 1e-9;
 void solve()
 {
-	int n;
-	unordered_map<int, int> mp;
-	cin >> n;
-	vector<int> arr(n + 1);
-	for (int i = 1; i <= n; i++)
-		cin >> arr[i];
-	mp[1] = 0;
-	for (int i = 1; i <= n; i++)
-	{
-		mp[2 * i] = mp[arr[i]] + 1;
-		mp[2 * i + 1] = mp[arr[i]] + 1;
-	}
-	for (int i = 1; i <= 2 * n + 1; i++)
-		cout << mp[i] << "\n";
+	ld a,b;
+	cin>>a>>b;
+	cout<<fixed<<setprecision(3)<<a/b;
 }
 int32_t main()
 {

@@ -8,6 +8,7 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+
 // first way- find the length, reach the middle
 // second way, use the frog tortoise approach
 ListNode *Middle(ListNode *head)

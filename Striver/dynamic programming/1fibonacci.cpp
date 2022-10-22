@@ -55,3 +55,10 @@ int main()
     cout << "\nUsing tabulation: " << fibonacciTabulation(n);
     cout << "\n space complexity solution: " << fibonacciSpace(n);
 }
+
+
+int fib(int n)
+{
+    if(n<=1) return n;
+    return fib(n-1)+fib(n-2);
+}
