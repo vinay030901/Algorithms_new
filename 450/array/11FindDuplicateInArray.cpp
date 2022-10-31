@@ -31,7 +31,7 @@ int main()
     // this could only be used for finding only single duplicate number
     for (int i = 0; i < n; i++)
     {
-        arr[arr[i]] += num;
+        arr[arr[i]%num] += num;
     }
     for (int i = 0; i < n; i++)
     {

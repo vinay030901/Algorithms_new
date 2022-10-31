@@ -27,7 +27,7 @@ void dbg_out(Head H, Tail... T)
 #endif
 
 #define ar array
-#define int long long
+//#define int unsigned long long
 #define ld long double
 #define sza(x) ((int)x.size())
 #define all(a) (a).begin(), (a).end()
@@ -53,64 +53,37 @@ static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
 	return a.first > b.first;
 }
 const int mod = 998244353;
-int n, m, k;
-vector<vector<int>> dp;
-int bin_power_mod(int base, int power, int m = mod)
-{
-	base %= m;
-	int res = 1;
-	while (power > 0)
-	{
-		if (power & 1)
-			res = res * base % m;
-		base = base * base % m;
-		power >>= 1;
-	}
-	return res;
-}
-int recur(int index, int moves)
-{
-	if (dp[index][moves] != -1)
-		return dp[index][moves];
-	int ans = 0;
-	for (int i = 1; i <= m; i++)
-	{
-		if (index - i >= 0)
-		{
-			ans += recur(index - i, moves - 1) * bin_power_mod(m, mod - 2);
-			ans %= mod;
-		}
-		if (index != n && i > (n - index))
-		{
-			int leftover_moves = i - (n - index);
-			ans += recur(n - leftover_moves, moves - 1) * bin_power_mod(m, mod - 2);
-			ans %= mod;
-		}
-	}
-	return dp[index][moves] = ans;
-}
 void solve()
 {
-	// in this question, we need to find the probability of reaching the end of the line of squares when we can have a jump of atmost k
-	// to do this question, we can divide this question to finding the probability of reaching the end of the line in exactly 1 move
-	// or 2 move or 3 move, and then we will add all of them
-	// so we now have the question to find the probability of reaching the end of the line in k die rolls
-	// for every face value from 1 to n: we will compute i'
-	// dp[i][j]=dp[i][j]+dp[i'][j-1]*1/m
-	// to compute i'- it face value is x, either i' lie on the left side, then i'=i-x
-	// when i' is on right side, if difference from i to n is y, then i'=n-(x-y)
-	cin >> n >> m >> k;
-	dp = vector<vector<int>>(n + 1, vector<int>(k + 1, -1));
-	int finalAns = 0;
-	dp[0][0] = 1;
-	for (int i = 1; i <= n; i++)
-		dp[i][0] = 0;
-	for (int i = 1; i <= k; i++)
-	{
-		finalAns += recur(n, i);
-		finalAns %= mod;
-	}
-	cout << finalAns;
+	char g[10][10];
+	for (int i = 1; i <= 9; i++)
+		for (int j = 1; j <= 9; j++)
+			cin >> g[i][j];
+
+	int ans = 0;
+	for (int x1 = 1; x1 <= 9; x1++)
+		for (int y1 = 1; y1 <= 9; y1++)
+			for (int x2 = 1; x2 <= 9; x2++)
+				for (int y2 = 1; y2 <= 9; y2++)
+				{
+					if (x1 == x2 && y1 == y2)
+						continue;
+					if (g[x1][y1] == '.' || g[x2][y2] == '.')
+						continue;
+					int x3 = x2 - (y2 - y1);
+					int y3 = y2 - (x1 - x2);
+					int x4 = x1 - (y2 - y1);
+					int y4 = y1 - (x1 - x2);
+					
+					if (x3 >= 1 && x3 <= 9 && y3 >= 1 && y3 <= 9 && g[x3][y3] == '#')
+						if (x4 >= 1 && x4 <= 9 && y4 >= 1 && y4 <= 9 && g[x4][y4] == '#')
+						{
+							cout<<x1<<" "<<y1<<" "<<x2<<" "<<y2<<" "<<x3<<" "<<y3<<" "<<x4<<" "<<y4<<endl;
+							ans++;
+						}
+							
+				}
+	cout << ans / 4;
 }
 int32_t main()
 {
