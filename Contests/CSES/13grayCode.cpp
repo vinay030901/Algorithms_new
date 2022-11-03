@@ -29,7 +29,7 @@ void dbg_out(Head H, Tail... T)
 #define ar array
 #define int long long
 #define ld long double
-#define sza(x) ((int)x.size())
+#define sz(x) ((int)x.size())
 #define all(a) (a).begin(), (a).end()
 #define print(v)                            \
     for (int i = 0; i < (int)v.size(); i++) \
@@ -40,7 +40,7 @@ void dbg_out(Head H, Tail... T)
 #define f first
 #define s second
 #define el endl
-#define vc vector<int>
+#define vi vector<int>
 
 const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
@@ -53,37 +53,49 @@ static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
     return a.first > b.first;
 }
 const int mod = 998244353;
-int cost(char a, char b)
+void bin(int n)
 {
-    if (b > a)
-        return b - a;
-    else
-        return 26 + b - a;
+    if (n > 1)
+        bin(n >> 1);
+    cout << (n & 1);
 }
-vector<int>vis(10000000,-1);
-int recur(string a, string b, int n, int i)
+vector<string> generateArr(int n)
 {
-    if (i == n)
-        return 0;
-    if()
-    if (a[i] == b[i])
-        return recur(a, b, n, i + 1);
-    int atob = recur(a, b, n, i + 1) + cost(a[i], b[i]);
-    int btoa = recur(a, b, n, i + 1) - cost(b[i], a[i]);
-    if (abs(atob) <= abs(btoa))
-        return atob;
-    else
-        return btoa;
-    return 0;
+    if (n <= 0)
+        return {"0"};
+    else if (n == 1)
+        return {"0", "1"};
+    vector<string> recAns = generateArr(n - 1);
+    vector<string> mainAns;
+    // append 0 to first half
+    for (int i = 0; i < recAns.size(); i++)
+        mainAns.push_back("0" + recAns[i]);
+
+    // append 1 to second half
+    for (int i = recAns.size() - 1; i >= 0; i--)
+        mainAns.push_back("1" + recAns[i]);
+
+    return mainAns;
 }
-void solve()
+void solve1()
 {
     int n;
     cin >> n;
-    string a, b;
-    cin >> a;
-    cin >> b;
-    cout << abs(recur(a, b, n, 0)) << "\n";
+    vector<string> arr = generateArr(n);
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << endl;
+}
+void solve()
+{
+    // https://www.geeksforgeeks.org/binary-representation-of-a-given-number/
+    int n;
+    cin >> n;
+    int limit = pow(2, n);
+    for (int i = 0; i < limit; i++)
+    {
+        int val = (i ^ (i >> 1));
+        cout << bitset<32>(val).to_string().substr(32 - n) << endl;
+    }
 }
 int32_t main()
 {
@@ -96,7 +108,7 @@ int32_t main()
     cin.tie(0);
     cout.tie(0);
     int tc = 1;
-    cin >> tc;
+    // cin >> tc;
     for (int t = 1; t <= tc; t++)
     {
         // cout << "Case #" << t << ": ";

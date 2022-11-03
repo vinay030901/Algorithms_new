@@ -48,21 +48,15 @@ int main()
 {
     int n, m;
     cin >> n >> m;
-    vector<pair<int, int>> adj[n + 1];
+    vector<int> adj[n + 1];
     for (int i = 0; i < m; i++)
     {
         int a, b, wt;
-        cin >> a >> b >> wt;
-        adj[a].push_back({b, wt});
-        adj[b].push_back({a, wt});
+        cin >> a >> b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
     }
-    for (int i = 0; i < n; i++)
-    {
-        cout << i << " --> ";
-        for (auto x : adj[i])
-            cout << "(" << x.first << " , " << x.second << ") ";
-        cout << "\n";
-    }
+    
 
     // we have two arrays, in and low, in will store the time in which we enter the node,
     // at node 1 the value is zero, and suppose we enter the node 2 next, then the value at node 2 is 1

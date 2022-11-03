@@ -29,7 +29,7 @@ void dbg_out(Head H, Tail... T)
 #define ar array
 #define int long long
 #define ld long double
-#define sza(x) ((int)x.size())
+#define sz(x) ((int)x.size())
 #define all(a) (a).begin(), (a).end()
 #define print(v)                            \
     for (int i = 0; i < (int)v.size(); i++) \
@@ -40,7 +40,7 @@ void dbg_out(Head H, Tail... T)
 #define f first
 #define s second
 #define el endl
-#define vc vector<int>
+#define vi vector<int>
 
 const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
@@ -53,37 +53,47 @@ static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
     return a.first > b.first;
 }
 const int mod = 998244353;
-int cost(char a, char b)
-{
-    if (b > a)
-        return b - a;
-    else
-        return 26 + b - a;
-}
-vector<int>vis(10000000,-1);
-int recur(string a, string b, int n, int i)
-{
-    if (i == n)
-        return 0;
-    if()
-    if (a[i] == b[i])
-        return recur(a, b, n, i + 1);
-    int atob = recur(a, b, n, i + 1) + cost(a[i], b[i]);
-    int btoa = recur(a, b, n, i + 1) - cost(b[i], a[i]);
-    if (abs(atob) <= abs(btoa))
-        return atob;
-    else
-        return btoa;
-    return 0;
-}
 void solve()
 {
-    int n;
-    cin >> n;
-    string a, b;
-    cin >> a;
-    cin >> b;
-    cout << abs(recur(a, b, n, 0)) << "\n";
+    //
+    string str;
+    cin >> str;
+    int n = str.length();
+    unordered_map<char, int> mp;
+    for (auto it : str)
+        mp[it]++;
+    int odd = 0;
+    char oddch = '1';
+    for (auto it : mp)
+    {
+        if (it.second & 1)
+        {
+            odd++;
+            oddch = it.first;
+        }
+        if (odd > 1)
+        {
+            cout << "NO SOLUTION";
+            return;
+        }
+    }
+    string ans = "";
+    for (auto it : mp)
+    {
+        if (it.second & 1)
+            continue;
+        for (int i = 0; i < it.second / 2; i++)
+            ans += it.first;
+    }
+    string rev = ans;
+    reverse(all(rev));
+    if (oddch != '1')
+    {
+        int cnt = mp[oddch];
+        fr(cnt) ans += oddch;
+    }
+    ans += rev;
+    cout << ans;
 }
 int32_t main()
 {
@@ -96,7 +106,7 @@ int32_t main()
     cin.tie(0);
     cout.tie(0);
     int tc = 1;
-    cin >> tc;
+    // cin >> tc;
     for (int t = 1; t <= tc; t++)
     {
         // cout << "Case #" << t << ": ";

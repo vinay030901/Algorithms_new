@@ -7,18 +7,18 @@ ostream &operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.fi
 template <typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type>
 ostream &operator<<(ostream &os, const T_container &v)
 {
-	os << '{';
-	string sep;
-	for (const T &x : v)
-		os << sep << x, sep = ", ";
-	return os << '}';
+    os << '{';
+    string sep;
+    for (const T &x : v)
+        os << sep << x, sep = ", ";
+    return os << '}';
 }
 void dbg_out() { cerr << endl; }
 template <typename Head, typename... Tail>
 void dbg_out(Head H, Tail... T)
 {
-	cerr << ' ' << H;
-	dbg_out(T...);
+    cerr << ' ' << H;
+    dbg_out(T...);
 }
 #ifdef LOCAL
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
@@ -32,8 +32,8 @@ void dbg_out(Head H, Tail... T)
 #define sza(x) ((int)x.size())
 #define all(a) (a).begin(), (a).end()
 #define print(v)                            \
-	for (int i = 0; i < (int)v.size(); i++) \
-		cout << v[i] << " ";
+    for (int i = 0; i < (int)v.size(); i++) \
+        cout << v[i] << " ";
 #define fr(n) for (int i = 0; i < n; i++)
 #define fi(a, n) for (int i = a; i < n; i++)
 #define pb push_back
@@ -48,43 +48,36 @@ const int INF = 1e9;
 const ld EPS = 1e-9;
 static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
 {
-	if (a.first == b.first)
-		return a.first > b.first;
-	return a.first > b.first;
+    if (a.first == b.first)
+        return a.first > b.first;
+    return a.first > b.first;
 }
 const int mod = 998244353;
-int todigit(char c) { return c - '0'; }
 void solve()
 {
-	string str;
-	cin >> str;
-	int ans = 0;
-	vector<int> res(str.length());
-	res[0] = todigit(str[0]);
-	for (int i = 1; i < str.length(); i++)
-	{
-		int num = todigit(str[i]);
-		res[i] = (i + 1) * num + 10 * res[i - 1];
-		ans += res[i];
-	}
-	print(res);
-	cout << "\n"<< ans;
+    //
+    int n;
+    cin >> n;
+    int ans = 0;
+    for (int i = 5; n / i >= 1; i *= 5)
+        ans += (n / i);
+    cout << ans;
 }
 int32_t main()
 {
 
 #ifndef ONLINE_JUDGE
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
 #endif
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
-	cout.tie(0);
-	int tc = 1;
-	cin >> tc;
-	for (int t = 1; t <= tc; t++)
-	{
-		// cout << "Case #" << t << ": ";
-		solve();
-	}
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    int tc = 1;
+    // cin >> tc;
+    for (int t = 1; t <= tc; t++)
+    {
+        // cout << "Case #" << t << ": ";
+        solve();
+    }
 }

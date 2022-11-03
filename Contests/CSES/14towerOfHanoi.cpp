@@ -29,7 +29,7 @@ void dbg_out(Head H, Tail... T)
 #define ar array
 #define int long long
 #define ld long double
-#define sza(x) ((int)x.size())
+#define sz(x) ((int)x.size())
 #define all(a) (a).begin(), (a).end()
 #define print(v)                            \
     for (int i = 0; i < (int)v.size(); i++) \
@@ -40,7 +40,7 @@ void dbg_out(Head H, Tail... T)
 #define f first
 #define s second
 #define el endl
-#define vc vector<int>
+#define vi vector<int>
 
 const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
@@ -53,37 +53,37 @@ static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
     return a.first > b.first;
 }
 const int mod = 998244353;
-int cost(char a, char b)
+vector<pair<char, char>> ans;
+void towerOfHanoi(int n, char from_rod, char to_rod,
+                  char aux_rod)
 {
-    if (b > a)
-        return b - a;
-    else
-        return 26 + b - a;
-}
-vector<int>vis(10000000,-1);
-int recur(string a, string b, int n, int i)
-{
-    if (i == n)
-        return 0;
-    if()
-    if (a[i] == b[i])
-        return recur(a, b, n, i + 1);
-    int atob = recur(a, b, n, i + 1) + cost(a[i], b[i]);
-    int btoa = recur(a, b, n, i + 1) - cost(b[i], a[i]);
-    if (abs(atob) <= abs(btoa))
-        return atob;
-    else
-        return btoa;
-    return 0;
+    if (n == 0)
+    {
+        return;
+    }
+    towerOfHanoi(n - 1, from_rod, aux_rod, to_rod);
+    ans.push_back({from_rod, to_rod});
+    towerOfHanoi(n - 1, aux_rod, to_rod, from_rod);
 }
 void solve()
 {
+    // https://www.geeksforgeeks.org/c-program-for-tower-of-hanoi/
+
+    // to solve this problem, we have some steps
+    // put the small disk from A to B
+    // then disk from A to C
+    // then small disk from B to C
+    // then another disk from A to B
+    // then disk from C to A
+    // then disk from C to B
+    // then disk from A to B
+    // so in this way, the answer of 3 will complete
     int n;
     cin >> n;
-    string a, b;
-    cin >> a;
-    cin >> b;
-    cout << abs(recur(a, b, n, 0)) << "\n";
+    towerOfHanoi(n, '1', '3', '2');
+    cout << ans.size() << endl;
+    for (auto it : ans)
+        cout << it.first << " " << it.second << endl;
 }
 int32_t main()
 {
@@ -96,7 +96,7 @@ int32_t main()
     cin.tie(0);
     cout.tie(0);
     int tc = 1;
-    cin >> tc;
+    // cin >> tc;
     for (int t = 1; t <= tc; t++)
     {
         // cout << "Case #" << t << ": ";

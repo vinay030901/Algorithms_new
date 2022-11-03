@@ -29,7 +29,7 @@ void dbg_out(Head H, Tail... T)
 #define ar array
 #define int long long
 #define ld long double
-#define sza(x) ((int)x.size())
+#define sz(x) ((int)x.size())
 #define all(a) (a).begin(), (a).end()
 #define print(v)                            \
     for (int i = 0; i < (int)v.size(); i++) \
@@ -40,7 +40,7 @@ void dbg_out(Head H, Tail... T)
 #define f first
 #define s second
 #define el endl
-#define vc vector<int>
+#define vi vector<int>
 
 const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
@@ -53,37 +53,35 @@ static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
     return a.first > b.first;
 }
 const int mod = 998244353;
-int cost(char a, char b)
+set<string> s;
+void permutations(string str, int low, int high)
 {
-    if (b > a)
-        return b - a;
-    else
-        return 26 + b - a;
-}
-vector<int>vis(10000000,-1);
-int recur(string a, string b, int n, int i)
-{
-    if (i == n)
-        return 0;
-    if()
-    if (a[i] == b[i])
-        return recur(a, b, n, i + 1);
-    int atob = recur(a, b, n, i + 1) + cost(a[i], b[i]);
-    int btoa = recur(a, b, n, i + 1) - cost(b[i], a[i]);
-    if (abs(atob) <= abs(btoa))
-        return atob;
-    else
-        return btoa;
-    return 0;
+    if (low >= high)
+    {
+        s.insert(str);
+        return;
+    }
+    for (int i = low; i <= high; i++)
+    {
+        swap(str[i], str[low]);
+        permutations(str, low + 1, high);
+        swap(str[i], str[low]);
+    }
 }
 void solve()
 {
-    int n;
-    cin >> n;
-    string a, b;
-    cin >> a;
-    cin >> b;
-    cout << abs(recur(a, b, n, 0)) << "\n";
+    // we have to print all the permutations in this question
+    string str;
+    cin >> str;
+    sort(str.begin(), str.end());
+    set<string> st;
+    do
+    {
+        st.insert(str);
+    } while (next_permutation(all(str)));
+    cout << st.size() << endl;
+    for (auto it : st)
+        cout << it << endl;
 }
 int32_t main()
 {
@@ -96,7 +94,7 @@ int32_t main()
     cin.tie(0);
     cout.tie(0);
     int tc = 1;
-    cin >> tc;
+    // cin >> tc;
     for (int t = 1; t <= tc; t++)
     {
         // cout << "Case #" << t << ": ";

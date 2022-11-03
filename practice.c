@@ -1,8 +1,16 @@
-#include<stdio.h>
+#include <stdio.h>
 int main()
-{int a,b,c,d,e,avg;
-printf("enter the value of a,b,c,d,e : ");
-scanf("%d%d%d%d%d",&a,&b,&c,&d,&e);
-  avg =(a+b+c+d+e)/5;
-  printf("the average is %d", avg);
-  }
+{
+  int c;
+  printf("enter the number: ");
+  scanf("%d", &c);
+  printf("sizeof operator: %d\n", sizeof(c));  // sizeof operator
+  printf("address of operator: %d\n", &c);     // address of operator
+  printf("pre increment operator: %d\n", ++c); // pre increment operator
+  c++;
+  printf("post increment operator: %d\n", c); // post increment operator
+
+  printf("pre decrement operator: %d\n", --c); // pre decrement operator
+  c--;                                         // post decrement operator
+  printf("post decrement operator: %d\n", c);
+}

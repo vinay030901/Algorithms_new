@@ -29,7 +29,7 @@ void dbg_out(Head H, Tail... T)
 #define ar array
 #define int long long
 #define ld long double
-#define sza(x) ((int)x.size())
+#define sz(x) ((int)x.size())
 #define all(a) (a).begin(), (a).end()
 #define print(v)                            \
     for (int i = 0; i < (int)v.size(); i++) \
@@ -40,7 +40,7 @@ void dbg_out(Head H, Tail... T)
 #define f first
 #define s second
 #define el endl
-#define vc vector<int>
+#define vi vector<int>
 
 const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
@@ -53,37 +53,88 @@ static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
     return a.first > b.first;
 }
 const int mod = 998244353;
-int cost(char a, char b)
+int recur(int i, vector<int> &arr, int target)
 {
-    if (b > a)
-        return b - a;
-    else
-        return 26 + b - a;
-}
-vector<int>vis(10000000,-1);
-int recur(string a, string b, int n, int i)
-{
-    if (i == n)
+    if (target < 0)
+        return INT_MAX;
+    if (target == 0)
         return 0;
-    if()
-    if (a[i] == b[i])
-        return recur(a, b, n, i + 1);
-    int atob = recur(a, b, n, i + 1) + cost(a[i], b[i]);
-    int btoa = recur(a, b, n, i + 1) - cost(b[i], a[i]);
-    if (abs(atob) <= abs(btoa))
-        return atob;
-    else
-        return btoa;
-    return 0;
+    if (i == 0)
+    {
+        if (target >= arr[i])
+            return target - arr[i];
+        else
+            return target;
+    }
+
+    int notTake = recur(i - 1, arr, target);
+    int take = INT_MAX;
+    if (arr[i] <= target)
+        take = recur(i - 1, arr, target - arr[i]);
+    return min(take, notTake);
+}
+int ans = 0;
+bool isValid(int row, int col, vector<string> &board, int n)
+{
+    int duprow = row, dupcol = col;
+    while (row >= 0 && col >= 0)
+    {
+        if (board[row][col] == 'Q')
+            return false;
+        row--;
+        col--;
+    }
+    row = duprow;
+    col = dupcol;
+    while (col >= 0)
+    {
+        if (board[row][col] == 'Q')
+            return false;
+        col--;
+    }
+    col = dupcol;
+    while (row < n && col >= 0)
+    {
+        if (board[row][col] == 'Q')
+            return false;
+        row++;
+        col--;
+    }
+    return true;
+}
+void solve(int col, vector<string> &board, int n)
+{
+    if (col == n)
+    {
+        ans++;
+        return;
+    }
+    for (int row = 0; row < n; row++)
+    {
+        if (isValid(row, col, board, n) && board[row][col] != '*')
+        {
+            board[row][col] = 'Q';
+            solve(col + 1, board, n);
+            board[row][col] = '.';
+        }
+    }
 }
 void solve()
 {
-    int n;
-    cin >> n;
-    string a, b;
-    cin >> a;
-    cin >> b;
-    cout << abs(recur(a, b, n, 0)) << "\n";
+    char c;
+    vector<string> board(8);
+    for (int i = 0; i < 8; i++)
+    {
+        string s = "";
+        for (int j = 0; j < 8; j++)
+        {
+            cin >> c;
+            s += c;
+        }
+        board[i] = s;
+    }
+    solve(0, board, 8);
+    cout << ans;
 }
 int32_t main()
 {
@@ -96,7 +147,7 @@ int32_t main()
     cin.tie(0);
     cout.tie(0);
     int tc = 1;
-    cin >> tc;
+    // cin >> tc;
     for (int t = 1; t <= tc; t++)
     {
         // cout << "Case #" << t << ": ";
