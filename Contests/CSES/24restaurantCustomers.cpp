@@ -55,28 +55,31 @@ static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
 const int mod = 998244353;
 void solve()
 {
-    int n, m, x;
-    cin >> n >> m;
-    multiset<int> st;
-    for (int i = 0; i < n; i++)
+    int n;
+    cin >> n;
+    vector<int> arr(n), dep(n);
+    fr(n)
     {
-        cin >> x;
-        st.insert(x);
+        cin >> arr[i] >> dep[i];
     }
-    for (int i = 0; i < m; i++)
+    sort(all(arr));
+    sort(all(dep));
+    int i = 1, j = 0, mx = 1, platforms = 1;
+    while (i < n && j < n)
     {
-        cin >> x;
-        auto it = st.upper_bound(x);
-        if (it == st.begin())
+        if (arr[i] <= dep[j])
         {
-            cout << "-1\n";
+            platforms++;
+            i++;
         }
         else
         {
-            cout << *(--it) << "\n";
-            st.erase(it);
+            j++;
+            platforms--;
         }
+        mx = max(platforms, mx);
     }
+    cout << mx << endl;
 }
 int32_t main()
 {

@@ -55,28 +55,26 @@ static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
 const int mod = 998244353;
 void solve()
 {
-    int n, m, x;
-    cin >> n >> m;
-    multiset<int> st;
-    for (int i = 0; i < n; i++)
+    int n, x;
+    cin >> n >> x;
+    vector<int> v(n);
+    fr(n) cin >> v[i];
+    unordered_map<int, vector<int>> mp;
+    fr(n) mp[v[i]].push_back(i + 1);
+    for (auto it : mp)
     {
-        cin >> x;
-        st.insert(x);
-    }
-    for (int i = 0; i < m; i++)
-    {
-        cin >> x;
-        auto it = st.upper_bound(x);
-        if (it == st.begin())
+        int tofind=x-it.first;
+        if(it.first==tofind) if(mp[tofind].size()>1){
+            cout<<mp[tofind][0]<<" "<<mp[tofind][1];
+            return;
+        } 
+        else if (mp.count(tofind))
         {
-            cout << "-1\n";
-        }
-        else
-        {
-            cout << *(--it) << "\n";
-            st.erase(it);
+            cout << it.second[0] << " " << mp[x - it.first][0];
+            return;
         }
     }
+    cout << "IMPOSSIBLE";
 }
 int32_t main()
 {
