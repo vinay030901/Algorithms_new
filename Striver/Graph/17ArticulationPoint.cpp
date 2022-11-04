@@ -17,10 +17,10 @@ Let's consider the remaining case of . This vertex will be the point of articula
 
 Now we have to learn to check this fact for each vertex efficiently. We'll use "time of entry into node" computed by the depth first search.
 
-So, let  denote entry time for node . We introduce an array  which will let us check the fact for each vertex .  is the minimum of , the entry times  for each node  that is connected to node  via a back-edge  and the values of  for each vertex  which is a direct descendant of  in the DFS tree:
+So, let  denote entry time for node . We introduce an array  which will let us check the fact for each vertex .  is the minimum of , the entry times  for each node  that is connected t5o node  via a back-edge  and the values of  for each vertex  which is a direct descendant of  in the DFS tree:
 
- 
- 
+
+
 Now, there is a back edge from vertex  or one of its descendants to one of its ancestors if and only if vertex  has a child  for which . If , the back edge comes directly to , otherwise it comes to one of the ancestors of .
 
 Thus, the vertex  in the DFS tree is an articulation point if and only if .
@@ -56,37 +56,39 @@ void dfs(int node, int par, vector<int> &in, vector<int> &low, vector<int> &vis,
                                                   // is articulation point or not later, if the root has two or more subtree, it an articulation point, else not
                 cout << node << " - " << it << " is a bridge" << endl;
             ++children; // to count the number of subtree of node, if root has two or more, then it is cut vertex
-        // to test whether an edge is bridge or not
+                        // to test whether an edge is bridge or not
             /*
-            we had--- 
+            we had---
             1->2, 2->3, 3->4, 2->4
-            so 2->4 is a back edge here, 
+            so 2->4 is a back edge here,
             we will compare low time of 4 to in time of 3
             low time of 4 is in time of 3, so it is not a bridge
             since the above condition indicates that the 4 is connected to ancestor of 3, and therefore removing the connection between
-            them will do no harm*/}
-            else
-                low[node] = min(low[node], in[it]); // if we find another low ancestor, we will change the low value
+            them will do no harm*/
+        }
+        else
+            low[node] = min(low[node], in[it]); // if we find another low ancestor, we will change the low value
     }
-    if(par==-1 and children>1) cout<<"root is articulation point.\n";
+    if (par == -1 and children > 1)
+        cout << "root is articulation point.\n";
 }
 int main()
 {
     int n, m;
     cin >> n >> m;
-    vector<pair<int, int>> adj[n + 1];
+    vector<int> adj[n + 1];
     for (int i = 0; i < m; i++)
     {
         int a, b, wt;
         cin >> a >> b >> wt;
-        adj[a].push_back({b, wt});
-        adj[b].push_back({a, wt});
+        adj[a].push_back(b);
+        adj[b].push_back(a);
     }
     for (int i = 0; i < n; i++)
     {
         cout << i << " --> ";
         for (auto x : adj[i])
-            cout << "(" << x.first << " , " << x.second << ") ";
+            cout << x << " ";
         cout << "\n";
     }
 

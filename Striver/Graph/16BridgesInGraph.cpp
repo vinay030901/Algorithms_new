@@ -25,7 +25,12 @@ void dfs(int node, int par, vector<int> &in, vector<int> &low, vector<int> &vis,
     {
         if (it == par)
             continue;
-        if (!vis[it])
+        if (vis[it])
+        {
+            low[it] = min(low[node], in[it]);
+            cout << it << " and " << node << " is back edge\n";
+        }
+        else if (!vis[it])
         {
             dfs(it, node, in, low, vis, timer, adj); // forward edge
             low[node] = min(low[node], low[it]);
@@ -40,8 +45,6 @@ void dfs(int node, int par, vector<int> &in, vector<int> &low, vector<int> &vis,
             low time of 4 is in time of 3, so it is not a bridge
             since the above condition indicates that the 4 is connected to ancestor of 3, and therefore removing the connection between
             them will do no harm*/}
-            else
-                low[node] = min(low[node], in[it]);
     }
 }
 int main()
@@ -56,7 +59,6 @@ int main()
         adj[a].push_back(b);
         adj[b].push_back(a);
     }
-    
 
     // we have two arrays, in and low, in will store the time in which we enter the node,
     // at node 1 the value is zero, and suppose we enter the node 2 next, then the value at node 2 is 1
