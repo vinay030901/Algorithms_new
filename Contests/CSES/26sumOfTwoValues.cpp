@@ -59,20 +59,25 @@ void solve()
     cin >> n >> x;
     vector<int> v(n);
     fr(n) cin >> v[i];
-    unordered_map<int, vector<int>> mp;
-    fr(n) mp[v[i]].push_back(i + 1);
-    for (auto it : mp)
+    vector<pair<int, int>> arr;
+    fr(n)
+        arr.push_back({v[i], i + 1});
+    sort(arr.begin(), arr.end());
+    int i = 0, j = n - 1;
+    while (i < j)
     {
-        int tofind=x-it.first;
-        if(it.first==tofind) if(mp[tofind].size()>1){
-            cout<<mp[tofind][0]<<" "<<mp[tofind][1];
-            return;
-        } 
-        else if (mp.count(tofind))
+        int sum = arr[i].f + arr[j].f;
+        if (sum == x)
         {
-            cout << it.second[0] << " " << mp[x - it.first][0];
+            cout << arr[i].s << " " << arr[j].s;
             return;
         }
+        else if (sum > x)
+        {
+            j--;
+        }
+        else
+            i++;
     }
     cout << "IMPOSSIBLE";
 }
