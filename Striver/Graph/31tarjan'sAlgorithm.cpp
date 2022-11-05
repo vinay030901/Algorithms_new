@@ -9,6 +9,7 @@ it help in proper traversal of graph and find the low link value
 
 new low link condition: to update u's low to v's low, there has to be path from u to v and v must be on the stack
 */
+
 #include <bits/stdc++.h>
 using namespace std;
 int scc = 0;
