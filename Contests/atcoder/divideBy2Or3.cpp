@@ -63,7 +63,6 @@ int findGCD(vector<int> &n)
     gcd(*min_element(begin(n), end(n)), *max_element(begin(n), end(n)));
 }
 const int mod = 998244353;
-int is, js;
 int findways(int n, int gcd)
 {
     int ans = 0;
@@ -79,86 +78,35 @@ int findways(int n, int gcd)
     }
     return ans;
 }
-int n, m;
-bool check(int i, int j, vector<vector<char>> &grid, vector<vector<int>> &vis)
-{
-    if (i < 0 || i >= n || j < 0 || j >= m)
-        return false;
-    if (grid[i][j] == '#' || vis[i][j])
-        return false;
-    return true;
-}
-bool recur(int i, int j, vector<vector<char>> &grid, vector<vector<int>> &vis, int count)
-{
-    if (i == is && j == js)
-    {
-        if (count >= 4)
-            return 1;
-        return 0;
-    }
-    int a1, a2, a3, a4;
-    if (check(i + 1, j, grid, vis))
-    {
-        vis[i + 1][j] = 1;
-        a1 = recur(i + 1, j, grid, vis, count + 1);
-    }
-    if (check(i - 1, j, grid, vis))
-    {
-        vis[i - 1][j] = 1;
-        a2 = recur(i - 1, j, grid, vis, count + 1);
-    }
-    if (check(i, j + 1, grid, vis))
-    {
-        vis[i][j + 1] = 1;
-        a3 = recur(i, j + 1, grid, vis, count + 1);
-    }
-    if (check(i, j - 1, grid, vis))
-    {
-        vis[i][j - 1] = 1;
-        a4 = recur(i, j - 1, grid, vis, count + 1);
-    }
-    return a1 || a2 || a3 || a4;
-}
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-
-    vector<vector<char>> grid(n + 1, vector<char>(m + 1));
-    for (int i = 1; i <= n; i++)
+    int n;
+    cin >> n;
+    int a[n];
+    fr(n) cin >> a[i];
+    int g = 0;
+    int ans = 0;
+    fr(n) g = gcd(g, a[i]);
+    fr(n)
     {
-        for (int j = 1; j <= m; j++)
+        a[i] /= g;
+        while (a[i] % 2 == 0)
         {
-            cin >> grid[i][j];
-            if (grid[i][j] == 'S')
-            {
-                is = i;
-                js = j;
-            }
+            a[i] /= 2;
+            ans++;
+        }
+        while (a[i] % 3 == 0)
+        {
+            a[i] /= 3;
+            ans++;
+        }
+        if (a[i] != 1)
+        {
+            cout << "-1";
+            return;
         }
     }
-    vector<vector<int>> vis(n + 1, vector<int>(m + 1, 0));
-    if (recur(is + 1, js, grid, vis, 1) != 0)
-    {
-        cout << "Yes";
-        return;
-    }
-    if (recur(is, js + 1, grid, vis, 1) != 0)
-    {
-        cout << "Yes";
-        return;
-    }
-    if (recur(is - 1, js, grid, vis, 1) != 0)
-    {
-        cout << "Yes";
-        return;
-    }
-    if (recur(is, js - 1, grid, vis, 1) != 0)
-    {
-        cout << "Yes";
-        return;
-    }
-    cout << "No";
+    cout << ans;
 }
 int32_t main()
 {
