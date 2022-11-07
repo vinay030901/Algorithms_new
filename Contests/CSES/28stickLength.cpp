@@ -63,37 +63,23 @@ int findGCD(vector<int> &n)
     gcd(*min_element(begin(n), end(n)), *max_element(begin(n), end(n)));
 }
 const int mod = 998244353;
-int findways(int n, int gcd)
-{
-    int ans = 0;
-    while (n != gcd && n)
-    {
-        if (n % 2 == 0)
-            n /= 2;
-        else if (n % 3 == 0)
-            n /= 3;
-        else
-            return -1;
-        ans++;
-    }
-    return ans;
-}
 void solve()
 {
     int n;
     cin >> n;
-    priority_queue<char>pq;
-    char x;
+    int x;
+    vector<int> arr;
     fr(n)
     {
         cin >> x;
-        pq.push(x);
+        arr.push_back(x);
     }
-    cout<<pq.top()<<endl;
-    pq.pop();
-    cout<<pq.top()<<endl;
-    pq.pop();
-    cout<<pq.top()<<endl;
+    sort(all(arr));
+    int med = arr[n / 2];
+    int ans = 0;
+    for (int i = 0; i < n; i++)
+        ans += abs(med - arr[i]);
+    cout << ans;
 }
 int32_t main()
 {

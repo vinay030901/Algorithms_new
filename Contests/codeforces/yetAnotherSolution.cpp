@@ -63,37 +63,38 @@ int findGCD(vector<int> &n)
     gcd(*min_element(begin(n), end(n)), *max_element(begin(n), end(n)));
 }
 const int mod = 998244353;
-int findways(int n, int gcd)
-{
-    int ans = 0;
-    while (n != gcd && n)
-    {
-        if (n % 2 == 0)
-            n /= 2;
-        else if (n % 3 == 0)
-            n /= 3;
-        else
-            return -1;
-        ans++;
-    }
-    return ans;
-}
 void solve()
 {
-    int n;
-    cin >> n;
-    priority_queue<char>pq;
-    char x;
-    fr(n)
-    {
-        cin >> x;
-        pq.push(x);
-    }
-    cout<<pq.top()<<endl;
-    pq.pop();
-    cout<<pq.top()<<endl;
-    pq.pop();
-    cout<<pq.top()<<endl;
+    int n,q;
+    cin >> n>>q;
+    // when the size of the query is odd then the answer is xor of all the element of the query
+    /*
+    for example we have 5 element, then xor of all those element is y
+    now we take 3 element and their xor is x- so we have x x x a b
+    now we take (x,a,b) and thier xor is y- so we have (x x y) and xor of all of them is y because x^x is 0*/
+
+    /*now we talk about query of even size- for example 4
+    
+    here we can't make the value zero if take 3 and 1- 
+    a b c d
+    x x x d(first 3)
+    x d d d(last 3)
+    x x x d(first 3)
+    so we can't find the answer in this case
+    therefore we will divide the even value into groups of odd values and then find the answer like we are gonna find in odd case(which is finding the xor of all the elements)
+    
+    now we will find the cases
+    
+    ODD-
+    y=0(if all the elements are zero, then answer is zero)-0
+    if(all elements are not zero)-1
+    y!=0
+    
+    EVEN- 
+    y=0- all elements are zero- 0
+    else if last element is 0 or first element is zero- then 1
+    if not- then we have to divide it into two odd length xor with value 0- then answer is 2
+    if we can't do it- we have to print -1*/
 }
 int32_t main()
 {

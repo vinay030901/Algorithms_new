@@ -82,18 +82,22 @@ void solve()
 {
     int n;
     cin >> n;
-    priority_queue<char>pq;
-    char x;
+    int x;
+    vector<int> arr;
     fr(n)
     {
-        cin >> x;
-        pq.push(x);
+        cin>>x;
+        arr.push_back(x);
     }
-    cout<<pq.top()<<endl;
-    pq.pop();
-    cout<<pq.top()<<endl;
-    pq.pop();
-    cout<<pq.top()<<endl;
+    int sum = 0, mx = arr[0];
+    for (int i = 0; i < n; i++)
+    {
+        sum += arr[i];
+        if (arr[i] > sum)
+            sum = arr[i];
+        mx = max(sum, mx);
+    }
+    cout << mx;
 }
 int32_t main()
 {

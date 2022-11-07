@@ -48,9 +48,8 @@ bool subsetSumToKTabulation(vector<int> arr, int target)
     prev[0] = cur[0] = true;
     prev[arr[0]] = true;
     for (int i = 1; i < n; i++)
-        for (int j = 1; j <= target; j++)\
+        for (int j = 1; j <= target; j++)
 
-        
         {
             bool notTake = prev[j];
             bool take = false;

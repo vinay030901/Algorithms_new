@@ -63,37 +63,32 @@ int findGCD(vector<int> &n)
     gcd(*min_element(begin(n), end(n)), *max_element(begin(n), end(n)));
 }
 const int mod = 998244353;
-int findways(int n, int gcd)
-{
-    int ans = 0;
-    while (n != gcd && n)
-    {
-        if (n % 2 == 0)
-            n /= 2;
-        else if (n % 3 == 0)
-            n /= 3;
-        else
-            return -1;
-        ans++;
-    }
-    return ans;
-}
 void solve()
 {
     int n;
     cin >> n;
-    priority_queue<char>pq;
-    char x;
+    int x;
+    vector<int> arr;
     fr(n)
     {
         cin >> x;
-        pq.push(x);
+        arr.push_back(x);
     }
-    cout<<pq.top()<<endl;
-    pq.pop();
-    cout<<pq.top()<<endl;
-    pq.pop();
-    cout<<pq.top()<<endl;
+    sort(all(arr));
+    // https://discuss.codechef.com/t/cses-missing-coin-sum/84039/3
+    // so we have a certain property with us that if we have a currensum with us(sum till i) and we haven't find the smallest number
+    // which means that till a[i], we can make every possible number less than equal to current sum
+    // so if the next number is equal to a[i] or just one greater than a[i], that will not our answer because using it, we can make
+    // more sums but won't be able to find the number which can't be made using the sums
+    // so we will search for the number which is 2 or more greater than current sum
+    int currentSum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (currentSum + 1 < arr[i])
+            break;
+        currentSum += arr[i];
+    }
+    cout << currentSum + 1 << endl;
 }
 int32_t main()
 {

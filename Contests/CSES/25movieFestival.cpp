@@ -52,48 +52,25 @@ static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
         return a.first > b.first;
     return a.first > b.first;
 }
-int gcd(int a, int b)
-{
-    if (b == 0)
-        return a;
-    return gcd(b, a % b);
-}
-int findGCD(vector<int> &n)
-{
-    gcd(*min_element(begin(n), end(n)), *max_element(begin(n), end(n)));
-}
 const int mod = 998244353;
-int findways(int n, int gcd)
-{
-    int ans = 0;
-    while (n != gcd && n)
-    {
-        if (n % 2 == 0)
-            n /= 2;
-        else if (n % 3 == 0)
-            n /= 3;
-        else
-            return -1;
-        ans++;
-    }
-    return ans;
-}
 void solve()
 {
     int n;
     cin >> n;
-    priority_queue<char>pq;
-    char x;
-    fr(n)
+    vector<vector<int>> v(n, vector<int>(2));
+    fr(n) cin >> v[i][0] >> v[i][1];
+    sort(v.begin(), v.end(), [&](const vector<int> &a, const vector<int> &b)
+         { return a[1] < b[1]; });
+    int mx = 1, end = v[0][1];
+    for (int i = 1; i < n; i++)
     {
-        cin >> x;
-        pq.push(x);
+        if (v[i][0] >= end)
+        {
+            end = v[i][1];
+            mx++;
+        }
     }
-    cout<<pq.top()<<endl;
-    pq.pop();
-    cout<<pq.top()<<endl;
-    pq.pop();
-    cout<<pq.top()<<endl;
+    cout << mx;
 }
 int32_t main()
 {
