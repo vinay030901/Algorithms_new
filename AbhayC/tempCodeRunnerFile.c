@@ -1,40 +1,12 @@
 #include <stdio.h>
 int main()
 {
-    int a;
-    printf("enter a values of a :");
-    scanf("%d", &a);
-    if (a== 1)
+    int n;
+    printf("enter the number: ");
+    scanf("%d", &n);
+    for (int i = 1; i <= 10; i++)
     {
-        printf("weekday is sunday");
+        int x = n * i;
+        printf("%d * %d = %d\n", n, i, x);
     }
-    else if (a==2)
-    {
-        printf("weekday is Monday");
-    }
-    else if (a==3)
-    {
-        printf("weekday is tuesday");
-    }
-    else if (a==4)
-    {
-        printf("weekday is wednesday");
-    }
-    else if(a==5)
-    {
-        printf("weekday is thursday");
-    }
-    else if (a==6)
-    { 
-        printf("weekday is  friday"); 
-    }
-    else if (a==7)
-    {
-        printf("weekday is saturday");
-    }
-    else 
-    {
-        printf("invalid number");
-    }     
 }
-

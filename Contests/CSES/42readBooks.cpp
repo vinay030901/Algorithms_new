@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
+using namespace std;
 template <class T>
 using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 using namespace std;
@@ -51,63 +53,30 @@ static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
         return a.first > b.first;
     return a.first > b.first;
 }
+int findGCD(vector<int> &nums)
+{
+    int maxi = *max_element(nums.begin(), nums.end()), mini = *min_element(nums.begin(), nums.end()), remain;
+    while (mini)
+    {
+        remain = maxi % mini;
+        maxi = mini;
+        mini = remain;
+    }
+    return maxi;
+}
 const int mod = 998244353;
 void solve()
 {
-    // so we need to find the digit at nth position when all the integers are laid out
-    //  and we have to do this in constant time as well
-    /*now if the n<10-> then we can direcly give the number- (1,9)
-    if number>=10 && number<=99 and we have 99-10+1=90 numbers with us, each digit cost 2- so 180 digits
-    and the position is till 189(180+9)
-    so if we get a position 16- then we know that is between 10 and 99
-    so 16-10=6, and 6/2 is 3- 10+3=13-> so our digit is 1
-
-    and we are going to use binary search for searching the solution, such 10 and 99-> then we will go 99-10/2 which is mid
-    and if it is true, we will go to left or right depending on the need*/
-    int t;
-    cin >> t;
-    vector<int> powers(19, 1);
-    for (int i = 1; i < 19; i++)
-        powers[i] = 10 * powers[i - 1];
-    while (t--)
+    int n, sum = 0, mx = 0;
+    cin >> n;
+    vector<int> v(n);
+    fr(n)
     {
-        int n;
-        cin >> n;
-        int numdig = 0, digits = 0, predig = 0;
-        for (int i = 1; i < 19; i++)
-        {
-            // now we need to find the range of that value n
-            digits += (powers[i] - powers[i - 1]) * i;
-            if (digits >= n)
-            {
-                numdig = i;
-                break;
-            }
-            predig = digits;
-        }
-        int low = powers[numdig - 1];
-        int high = powers[numdig] - 1;
-        int ans = 0;
-        int startAns = 0;
-        while (low <= high)
-        {
-            int mid = (high + low) / 2;
-            int startPos = (mid - powers[numdig - 1]) * numdig + predig + 1;
-            if (startPos <= n)
-            {
-                if (mid > ans)
-                {
-                    ans = mid;
-                    startAns = startPos;
-                }
-                low = mid + 1;
-            }
-            else
-                high = mid - 1;
-        }
-        string number = to_string(ans);
-        cout << number[n - startAns] << endl;
+        cin >> v[i];
+        mx = max(mx, v[i]);
+        sum += v[i];
     }
+    cout << max(2 * mx, sum);
 }
 int32_t main()
 {

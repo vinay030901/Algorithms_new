@@ -65,46 +65,27 @@ int findGCD(vector<int> &n)
 const int mod = 998244353;
 void solve()
 {
-    int n, q;
-    cin >> n >> q;
+    // https://usaco.guide/problems/cses-1163-traffic-lights/solution
+    int n, t;
+    cin >> n >> t;
     int x;
-    vector<int> arr(n + 1), position(n + 1);
-    for (int i = 1; i <= n; i++)
+    set<int> lights{0, n};
+    multiset<int> distance{n};
+    while (t--)
     {
-        cin >> arr[i];
-        position[arr[i]] = i;
-    }
-    int ans = 1;
-    for (int i = 1; i < n; i++)
-    {
-        ans += (position[i] > position[i + 1]);
-    }
-    int l, r;
-    set<pair<int, int>> pairs;
-    fr(q)
-    {
-        cin >> l >> r;
-        if (arr[l] + 1 <= n)
-            pairs.insert({arr[l], arr[l] + 1});
-        if (arr[l] - 1 >= 1)
-            pairs.insert({arr[l] - 1, arr[l]});
-        if (arr[r] + 1 <= n)
-            pairs.insert({arr[r], arr[r] + 1});
-        if (arr[r] - 1 >= 1)
-            pairs.insert({arr[r] - 1, arr[r]});
-        for (auto it : pairs)
-        {
-            ans -= position[it.first] > position[it.second];
-        }
-        swap(arr[l], arr[r]);
-        position[arr[l]] = l;
-        position[arr[r]] = r;
-        for (auto it : pairs)
-        {
-            ans += position[it.first] > position[it.second];
-        }
-        pairs.clear();
-        cout << ans << "\n";
+        cin >> x;
+        auto it1 = lights.upper_bound(x);
+        auto it2 = it1;
+        it1--;
+
+        distance.erase(distance.find(*it2 - *it1));
+        distance.insert(*it2 - x);
+        distance.insert(x - *it1);
+        lights.insert(x);
+
+        auto ans = distance.end();
+        ans--;
+        cout << *ans << endl;
     }
 }
 int32_t main()

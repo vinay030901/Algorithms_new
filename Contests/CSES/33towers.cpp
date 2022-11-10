@@ -65,47 +65,25 @@ int findGCD(vector<int> &n)
 const int mod = 998244353;
 void solve()
 {
-    int n, q;
-    cin >> n >> q;
+    int n;
+    cin >> n;
     int x;
-    vector<int> arr(n + 1), position(n + 1);
-    for (int i = 1; i <= n; i++)
+    multiset<int> st;
+    fr(n)
     {
-        cin >> arr[i];
-        position[arr[i]] = i;
-    }
-    int ans = 1;
-    for (int i = 1; i < n; i++)
-    {
-        ans += (position[i] > position[i + 1]);
-    }
-    int l, r;
-    set<pair<int, int>> pairs;
-    fr(q)
-    {
-        cin >> l >> r;
-        if (arr[l] + 1 <= n)
-            pairs.insert({arr[l], arr[l] + 1});
-        if (arr[l] - 1 >= 1)
-            pairs.insert({arr[l] - 1, arr[l]});
-        if (arr[r] + 1 <= n)
-            pairs.insert({arr[r], arr[r] + 1});
-        if (arr[r] - 1 >= 1)
-            pairs.insert({arr[r] - 1, arr[r]});
-        for (auto it : pairs)
+        cin >> x;
+        auto it = st.upper_bound(x);
+        if (it == st.end())
         {
-            ans -= position[it.first] > position[it.second];
+            st.insert(x);
         }
-        swap(arr[l], arr[r]);
-        position[arr[l]] = l;
-        position[arr[r]] = r;
-        for (auto it : pairs)
+        else
         {
-            ans += position[it.first] > position[it.second];
+            st.erase(it);
+            st.insert(x);
         }
-        pairs.clear();
-        cout << ans << "\n";
     }
+    cout << st.size();
 }
 int32_t main()
 {

@@ -52,15 +52,16 @@ static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
         return a.first > b.first;
     return a.first > b.first;
 }
-int gcd(int a, int b)
+int findGCD(vector<int> &nums)
 {
-    if (b == 0)
-        return a;
-    return gcd(b, a % b);
-}
-int findGCD(vector<int> &n)
-{
-    gcd(*min_element(begin(n), end(n)), *max_element(begin(n), end(n)));
+    int maxi = *max_element(nums.begin(), nums.end()), mini = *min_element(nums.begin(), nums.end()), remain;
+    while (mini)
+    {
+        remain = maxi % mini;
+        maxi = mini;
+        mini = remain;
+    }
+    return maxi;
 }
 const int mod = 998244353;
 int is, js;
@@ -79,86 +80,28 @@ int findways(int n, int gcd)
     }
     return ans;
 }
-int n, m;
-bool check(int i, int j, vector<vector<char>> &grid, vector<vector<int>> &vis)
-{
-    if (i < 0 || i >= n || j < 0 || j >= m)
-        return false;
-    if (grid[i][j] == '#' || vis[i][j])
-        return false;
-    return true;
-}
-bool recur(int i, int j, vector<vector<char>> &grid, vector<vector<int>> &vis, int count)
-{
-    if (i == is && j == js)
-    {
-        if (count >= 4)
-            return 1;
-        return 0;
-    }
-    int a1, a2, a3, a4;
-    if (check(i + 1, j, grid, vis))
-    {
-        vis[i + 1][j] = 1;
-        a1 = recur(i + 1, j, grid, vis, count + 1);
-    }
-    if (check(i - 1, j, grid, vis))
-    {
-        vis[i - 1][j] = 1;
-        a2 = recur(i - 1, j, grid, vis, count + 1);
-    }
-    if (check(i, j + 1, grid, vis))
-    {
-        vis[i][j + 1] = 1;
-        a3 = recur(i, j + 1, grid, vis, count + 1);
-    }
-    if (check(i, j - 1, grid, vis))
-    {
-        vis[i][j - 1] = 1;
-        a4 = recur(i, j - 1, grid, vis, count + 1);
-    }
-    return a1 || a2 || a3 || a4;
-}
+// if (v[0] == v[n - 1])
+//         cout << "YES\n";
+//     else if (v[0] == v[n - 2])
+//         cout << "YES\n";
+//     else if (v[1] == v[n - 1])
+//         cout << "YES\n";
+//     else
+//         cout << "NO\n";
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-
-    vector<vector<char>> grid(n + 1, vector<char>(m + 1));
-    for (int i = 1; i <= n; i++)
+    int n;
+    cin >> n;
+    vi v(n);
+    fr(n) cin >> v[i];
+    int hcf = findGCD(v);
+    int ans = 0;
+    for (auto it : v)
     {
-        for (int j = 1; j <= m; j++)
-        {
-            cin >> grid[i][j];
-            if (grid[i][j] == 'S')
-            {
-                is = i;
-                js = j;
-            }
-        }
+        if (it != hcf)
+            ans++;
     }
-    vector<vector<int>> vis(n + 1, vector<int>(m + 1, 0));
-    if (recur(is + 1, js, grid, vis, 1) != 0)
-    {
-        cout << "Yes";
-        return;
-    }
-    if (recur(is, js + 1, grid, vis, 1) != 0)
-    {
-        cout << "Yes";
-        return;
-    }
-    if (recur(is - 1, js, grid, vis, 1) != 0)
-    {
-        cout << "Yes";
-        return;
-    }
-    if (recur(is, js - 1, grid, vis, 1) != 0)
-    {
-        cout << "Yes";
-        return;
-    }
-    cout << "No";
+    cout << ans << endl;
 }
 int32_t main()
 {
@@ -171,7 +114,7 @@ int32_t main()
     cin.tie(0);
     cout.tie(0);
     int tc = 1;
-    // cin >> tc;
+    cin >> tc;
     for (int t = 1; t <= tc; t++)
     {
         // cout << "Case #" << t << ": ";

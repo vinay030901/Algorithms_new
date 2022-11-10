@@ -65,47 +65,24 @@ int findGCD(vector<int> &n)
 const int mod = 998244353;
 void solve()
 {
-    int n, q;
-    cin >> n >> q;
-    int x;
-    vector<int> arr(n + 1), position(n + 1);
-    for (int i = 1; i <= n; i++)
+    int n;
+    cin >> n;
+    vector<int> arr(n), position(n + 1);
+    fr(n)
+            cin >>
+        arr[i];
+    int l = 0, r = 0, len = 0, mx = 0;
+    unordered_map<int, int> mp;
+    while (r < n)
     {
-        cin >> arr[i];
-        position[arr[i]] = i;
+
+        while (mp.count(arr[r]))
+            mp.erase(arr[l++]);
+        mp[arr[r]]++;
+        mx = max(mx, r - l + 1);
+        r++;
     }
-    int ans = 1;
-    for (int i = 1; i < n; i++)
-    {
-        ans += (position[i] > position[i + 1]);
-    }
-    int l, r;
-    set<pair<int, int>> pairs;
-    fr(q)
-    {
-        cin >> l >> r;
-        if (arr[l] + 1 <= n)
-            pairs.insert({arr[l], arr[l] + 1});
-        if (arr[l] - 1 >= 1)
-            pairs.insert({arr[l] - 1, arr[l]});
-        if (arr[r] + 1 <= n)
-            pairs.insert({arr[r], arr[r] + 1});
-        if (arr[r] - 1 >= 1)
-            pairs.insert({arr[r] - 1, arr[r]});
-        for (auto it : pairs)
-        {
-            ans -= position[it.first] > position[it.second];
-        }
-        swap(arr[l], arr[r]);
-        position[arr[l]] = l;
-        position[arr[r]] = r;
-        for (auto it : pairs)
-        {
-            ans += position[it.first] > position[it.second];
-        }
-        pairs.clear();
-        cout << ans << "\n";
-    }
+    cout<<mx;
 }
 int32_t main()
 {
