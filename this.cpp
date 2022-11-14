@@ -1,105 +1,24 @@
 #include <bits/stdc++.h>
-
 using namespace std;
-
-template <typename A, typename B>
-ostream &operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
-template <typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type>
-ostream &operator<<(ostream &os, const T_container &v)
+struct Result
 {
-    os << '{';
-    string sep;
-    for (const T &x : v)
-        os << sep << x, sep = ", ";
-    return os << '}';
+    Result() : output1(){};
+    int output1[100];
+};
+Result duplicateArray(int n, int arr[])
+{
+    Result r;
+    int mp[256] = {0};
+    for (int i = 0; i < n; i++)
+        mp[arr[i]]++;
+    int i = 0;
+    return r;
 }
-void dbg_out() { cerr << endl; }
-template <typename Head, typename... Tail>
-void dbg_out(Head H, Tail... T)
+int main()
 {
-    cerr << ' ' << H;
-    dbg_out(T...);
-}
-#ifdef LOCAL
-#define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
-#else
-#define dbg(...)
-#endif
-
-#define ar array
-#define int long long
-#define ld long double
-#define sza(x) ((int)x.size())
-#define all(a) (a).begin(), (a).end()
-#define print(v)                            \
-    for (int i = 0; i < (int)v.size(); i++) \
-        cout << v[i] << " ";
-#define fr(n) for (int i = 0; i < n; i++)
-#define fi(a, n) for (int i = a; i < n; i++)
-#define pb push_back
-#define f first
-#define s second
-#define el endl
-#define vc vector<int>
-
-const int MAX_N = 1e5 + 5;
-const int MOD = 1e9 + 7;
-const int INF = 1e9;
-const ld EPS = 1e-9;
-static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
-{
-    if (a.first == b.first)
-        return a.first > b.first;
-    return a.first > b.first;
-}
-const int mod = 998244353;
-int cost(char a, char b)
-{
-    if (b > a)
-        return b - a;
-    else
-        return 26 + b - a;
-}
-vector<int>vis(10000000,-1);
-int recur(string a, string b, int n, int i)
-{
-    if (i == n)
-        return 0;
-    if()
-    if (a[i] == b[i])
-        return recur(a, b, n, i + 1);
-    int atob = recur(a, b, n, i + 1) + cost(a[i], b[i]);
-    int btoa = recur(a, b, n, i + 1) - cost(b[i], a[i]);
-    if (abs(atob) <= abs(btoa))
-        return atob;
-    else
-        return btoa;
+    int n = 6;
+    int arr[] = {4, 4, 7, 8, 8, 9};
+    Result r = duplicateArray(n, arr);
+    cout << r.output1[0] << " " << r.output1[1];
     return 0;
-}
-void solve()
-{
-    int n;
-    cin >> n;
-    string a, b;
-    cin >> a;
-    cin >> b;
-    cout << abs(recur(a, b, n, 0)) << "\n";
-}
-int32_t main()
-{
-
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    int tc = 1;
-    cin >> tc;
-    for (int t = 1; t <= tc; t++)
-    {
-        // cout << "Case #" << t << ": ";
-        solve();
-    }
 }

@@ -67,29 +67,27 @@ void solve()
 {
     int n, sum = 0, mx = 0, x;
     cin >> n >> x;
-    vector<pair<int, int>> v;
+    unordered_map<int, pair<int, int>> mp;
+    vector<int> v(n + 1);
     for (int i = 1; i <= n; i++)
     {
-        int x;
-        cin >> x;
-        v.push_back({x, i});
-    }
-    sort(all(v));
-    for (int i = 0; i < n; i++)
-    {
-        int j = 0, k = n - 1, sum = v[i].first;
-        while (j != k)
+        cin >> v[i];
+        for (int j = 1; j < i; j++)
         {
-
-            if (i != j && i != k && sum + v[j].first + v[k].first == x)
+            int sum = v[i] + v[j];
+            if (mp.find(x - sum) != mp.end())
             {
-                cout << v[i].second << " " << v[j].second << " " << v[k].second;
-                return;
+                auto it = mp[x - sum];
+                if (i != it.first && i != it.second && j != it.first && j != it.second)
+                {
+                    cout << i << " " << j << " " << it.first << " " << it.second;
+                    return;
+                }
+                else
+                 mp[sum] = {i, j};
             }
-            else if (sum + v[j].first + v[k].first > x)
-                k--;
             else
-                j++;
+                 mp[sum] = {i, j};
         }
     }
     cout << "IMPOSSIBLE";

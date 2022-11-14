@@ -94,9 +94,8 @@ int lengthOfLIS(vector<int> &arr)
     return ahead[0];
 }
 
-int lengthOfLIS(vector<int> &arr)
+int lengthOfLIS(int n,vector<int> &arr)
 {
-    int n = arr.size();
     vector<int> lis(n, 1);
     for (int i = 1; i < n; i++)
         for (int j = 0; j < i; j++)

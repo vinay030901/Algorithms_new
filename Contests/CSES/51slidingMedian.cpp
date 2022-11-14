@@ -63,35 +63,56 @@ int findGCD(vector<int> &nums)
     return maxi;
 }
 const int mod = 998244353;
-int recur(int m, int n, vector<vector<int>>&dp)
+bool fun(int mid, vector<int> &v, int k)
 {
-    // time complexity is exponential in nature here
-    // space complexity is path length
-    if (m == 0 && n == 0)
-        return 1;
-    else if (m < 0 || n < 0)
-        return 1e9;
-    if (dp[m][n] != -1)
-        return dp[m][n];
-    int up = recur(m, m - n, dp);
-    int left = recur(m - n, n, dp);
-    return dp[m][n] = 1 + min(up, left);
-}
-int minsteps(int m, int n)
-{
-    // here we need to find all possible ways to reach from top-left corner to bottom-right corner
-    // since we want to find all ways, we need to use recursion
-    vector<vector<int>> dp(m, vector<int>(n, -1));
-    return recur(m - 1, n - 1, dp);
+    int sum = 0, count = 0;
+    for (int i = 0; i < v.size(); i++)
+    {
+        if (v[i] > mid)
+            return false;
+        if (sum + v[i] > mid)
+        {
+            sum = 0;
+            count++;
+        }
+        sum += v[i];
+    }
+    if (sum > 0)
+        count++;
+    return count <= k;
 }
 void solve()
 {
-    cout << minsteps(3, 2);
+    int n, k;
+    cin >> n >> k;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+    vector<int> ans;
+    multiset<int> st(v.begin(), v.begin() + k);
+    auto mid = next(st.begin(), k / 2);
+    for (int i = k;; i++)
+    {
+        ans.push_back(min(*mid, *prev(mid, 1 - k % 2)));
+        if (i == n)
+            break;
+        st.insert(v[i]);
+        if (v[i] < *mid)
+            mid--;
+        if (v[i - k] <= *mid)
+            mid++;
+        st.erase(st.lower_bound(v[i - k]));
+    }
+    for (auto it : ans)
+        cout << it << " ";
 }
 int32_t main()
 {
 
-
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);

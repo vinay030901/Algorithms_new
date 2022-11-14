@@ -63,35 +63,40 @@ int findGCD(vector<int> &nums)
     return maxi;
 }
 const int mod = 998244353;
-int recur(int m, int n, vector<vector<int>>&dp)
-{
-    // time complexity is exponential in nature here
-    // space complexity is path length
-    if (m == 0 && n == 0)
-        return 1;
-    else if (m < 0 || n < 0)
-        return 1e9;
-    if (dp[m][n] != -1)
-        return dp[m][n];
-    int up = recur(m, m - n, dp);
-    int left = recur(m - n, n, dp);
-    return dp[m][n] = 1 + min(up, left);
-}
-int minsteps(int m, int n)
-{
-    // here we need to find all possible ways to reach from top-left corner to bottom-right corner
-    // since we want to find all ways, we need to use recursion
-    vector<vector<int>> dp(m, vector<int>(n, -1));
-    return recur(m - 1, n - 1, dp);
-}
 void solve()
 {
-    cout << minsteps(3, 2);
+    int n, sum = 0, mx = 0, x;
+    cin >> n;
+    vector<int> arr(n);
+    seev(arr);
+    stack<int> st;
+    vector<int> ans;
+    fr(n)
+    {
+        if (st.empty())
+            ans.push_back(0);
+        else if (arr[i] > arr[st.top()])
+            ans.push_back(st.top() + 1);
+        else
+        {
+            while (!st.empty() && arr[st.top()] >= arr[i])
+                st.pop();
+            if (st.empty())
+                ans.push_back(0);
+            else
+                ans.push_back(st.top() + 1);
+        }
+        st.push(i);
+    }
+    for(auto it:ans) cout<<it<<" ";
 }
 int32_t main()
 {
 
-
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
