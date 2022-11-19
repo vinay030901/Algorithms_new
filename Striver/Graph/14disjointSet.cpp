@@ -19,32 +19,59 @@ and if the rank of one is smaller, then we will not increasr the rank
 we will also do path compression, that is if 7 is parent of 4 and 4 is parent of 3, then we make 7 as parent direcly of 3
 */
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-int parent[10000];
-int ranking[10000];
-
-void makeSet(int n){
-    for(int i=1;i<=n;i++){
-        parent[i]=i;
-        ranking[i]=0;
-    }
-}
-
-int findPar(int node){
-    if(node==parent[node])
-    return node;
-    return parent[node]=findPar(parent[node]); // path compression
-}
-
-void unions(int u,int v)
+class dsu
 {
-    u=findPar(u);
-    v=findPar(v);
-    if(ranking[u]<ranking[v]) parent[u]=v;
-    else if(ranking[v]<ranking[u]) parent[v]=u;
-    else{
-        parent[u]=v;
-        ranking[u]++;
+    vector<int> par, rank, size;
+
+public:
+    dsu(int n)
+    {
+        for (int i = 0; i <= n; i++)
+        {
+            par.push_back(i);
+            rank.push_back(1);
+            size.push_back(1);
+        }
     }
-}
+
+    int findPar(int node)
+    {
+        if (node == par[node])
+            return node;
+        return par[node] = findPar(par[node]); // path compression
+    }
+
+    void unionbyparent(int u, int v)
+    {
+        u = findPar(u);
+        v = findPar(v);
+        if (rank[u] < rank[v])
+            par[u] = v;
+        else if (rank[v] < rank[u])
+            par[v] = u;
+        else
+        {
+            par[u] = v;
+            rank[u]++;
+        }
+    }
+    void unionbysize(int u, int v)
+    {
+        u = findPar(u);
+        v = findPar(v);
+        if (u == v)
+            return;
+        if (size[u] < size[v])
+        {
+            par[u] = v;
+            size[v] += size[u];
+        }
+        else
+        {
+            par[v] = u;
+            size[u] += size[v];
+        }
+    }
+};
