@@ -1,95 +1,53 @@
 #include <bits/stdc++.h>
 using namespace std;
-class dsu
+int parent[1000000];
+int root(int a)
 {
-
-public:
-    vector<int> par, rank, size;
-    dsu(int n)
+    if (a == parent[a])
+        return a;
+    return parent[a] = root(parent[a]);
+}
+void connect(int a, int b)
+{
+    a = root(a);
+    b = root(b);
+    if (a != b)
     {
-        for (int i = 1; i <= n; i++)
-        {
-            par.push_back(i);
-            rank.push_back(1);
-            size.push_back(1);
-        }
+        parent[b] = a;
     }
-
-    int findPar(int node)
+}
+void connectedComponents(int n)
+{
+    set<int> s;
+    for (int i = 1; i <= n; i++)
     {
-        if (node == par[node])
-            return node;
-        return par[node] = findPar(par[node]); // path compression
+        s.insert(root(parent[i]));
     }
-    void unionn(int u, int v)
+    cout << s.size() - 1 << '\n';
+}
+void printAnswer(int N, vector<vector<int>>&edges)
+{
+    for (int i = 0; i <= N; i++)
     {
-        u = findPar(u);
-        v = findPar(v);
-        par[v] = u;
+        parent[i] = i;
     }
-    void unionbyparent(int u, int v)
+    for (int i = 0; i < edges.size(); i++)
     {
-        u = findPar(u);
-        v = findPar(v);
-        if (rank[u] < rank[v])
-            par[u] = v;
-        else if (rank[v] < rank[u])
-            par[v] = u;
-        else
-        {
-            par[u] = v;
-            rank[u]++;
-        }
+        connect(edges[i][0], edges[i][1]);
     }
-    void unionbysize(int u, int v)
-    {
-        u = findPar(u);
-        v = findPar(v);
-        if (u == v)
-            return;
-        if (size[u] < size[v])
-        {
-            par[u] = v;
-            size[v] += size[u];
-        }
-        else
-        {
-            par[v] = u;
-            size[u] += size[v];
-        }
-    }
-};
-void solve()
+    connectedComponents(N);
+}
+int main()
 {
     int n, m;
     cin >> n >> m;
-    dsu ds(n);
+    vector<vector<int>> edges;
     for (int i = 0; i < m; i++)
     {
         int a, b;
         cin >> a >> b;
-        ds.unionn(a, b);
+        edges.push_back({a, b});
     }
-    int ans = 0;
-    cout<<ds.par.size()<<endl;
-    for (int i = 1; i <= ds.par.size(); i++){
-        cout<<ds.par[i]<<" ";
-        if (ds.par[i] == i)
-            ans++;
-    }
-        
-    cout << ans << endl;
-}
-int main()
-{
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        solve();
-    }
+    printAnswer(n, edges);
+    return 0;
 }
