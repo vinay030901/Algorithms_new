@@ -15,7 +15,7 @@ using namespace std;
         cout << v[i] << " ";
 #define fr(n) for (int i = 0; i < n; i++)
 #define fi(a, n) for (int i = a; i < n; i++)
-#define pb push_back
+#define pb push_backu
 #define f first
 #define s second
 #define el endl
