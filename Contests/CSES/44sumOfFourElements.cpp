@@ -84,10 +84,10 @@ void solve()
                     return;
                 }
                 else
-                 mp[sum] = {i, j};
+                    mp[sum] = {i, j};
             }
             else
-                 mp[sum] = {i, j};
+                mp[sum] = {i, j};
         }
     }
     cout << "IMPOSSIBLE";

@@ -1,53 +1,54 @@
 #include <bits/stdc++.h>
 using namespace std;
-int parent[1000000];
-int root(int a)
+#define int unsigned long long
+int findNumber(int n, int k, vector<int> &arr)
 {
-    if (a == parent[a])
-        return a;
-    return parent[a] = root(parent[a]);
-}
-void connect(int a, int b)
-{
-    a = root(a);
-    b = root(b);
-    if (a != b)
+    sort(arr.begin(), arr.end());
+    unordered_set<int> st;
+    int i = n / 2, j = n / 2;
+    st.insert(n / 2);
+    k--;
+    if (k % 2 != 0)
     {
-        parent[b] = a;
+        while (k != 0)
+        {
+            i--;
+            j++;
+            st.insert(i);
+            st.insert(j);
+            k -= 2;
+        }
+    }
+    else
+    {
+        unordered_set<int> st1, st2;
+        int l = n / 2;
+        st1.insert(l);
+        int i = l, j = l;
+        while (k != 0)
+        {
+            i--;
+            st.insert(i);
+            if (k == 0)
+                break;
+            j++;
+            st.insert(j);
+        }
+        l = n / 2 - 1;
+        st2.insert(n / 2 - 1);
     }
 }
-void connectedComponents(int n)
+int32_t main()
 {
-    set<int> s;
-    for (int i = 1; i <= n; i++)
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    int t = 1;
+    // cin >> t;
+    while (t--)
     {
-        s.insert(root(parent[i]));
+        int n = 3, k = 5;
+        vector<int> arr = {2, 0, 0};
+        cout << findNumber(n, k, arr) << "\n";
     }
-    cout << s.size() - 1 << '\n';
-}
-void printAnswer(int N, vector<vector<int>>&edges)
-{
-    for (int i = 0; i <= N; i++)
-    {
-        parent[i] = i;
-    }
-    for (int i = 0; i < edges.size(); i++)
-    {
-        connect(edges[i][0], edges[i][1]);
-    }
-    connectedComponents(N);
-}
-int main()
-{
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> edges;
-    for (int i = 0; i < m; i++)
-    {
-        int a, b;
-        cin >> a >> b;
-        edges.push_back({a, b});
-    }
-    printAnswer(n, edges);
-    return 0;
 }
