@@ -1,19 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
-int getSum(vector<int> arr)
+long long solve(int n, vector<int>v)
 {
-    int n = arr.size(), ans = 0;
-    for (int i = 0; i < n; i += 2)
+    vector<int>sc;
+    for(int i=0; i<n; i++)
+    sc.push_back(v[i]);
+    sort(sc.begin(), sc.end());
+    long long sum = 0;
+    for (int i = 0; i < n; i++)
     {
-        int sum = arr[i] + arr[i + 1];
-        sum /= 2;
-        if (sum % 2 == 0)
-            ans++;
+        if(v[i]!=sc[i]) sum-=v[i];
+        else sum += v[i];
     }
-    return ans;
+    return sum;
 }
 int main()
 {
-    vector<int> v = {2, 0, 5, 0, 0, 0, 1, 0};
-    cout << getSum(v) << endl;
+    int n;
+    cin >> n;
+    vector<int>v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+    cout<<solve(n,v);
 }

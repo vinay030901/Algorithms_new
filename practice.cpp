@@ -63,56 +63,9 @@ int findGCD(vector<int> &nums)
     return maxi;
 }
 const int mod = 998244353;
-
 void solve()
 {
-    auto mergeSort = [&](vector<int> &a) -> int
-    {
-        int n = (int)a.size();
-
-        int ans = 0, cnt1 = 0;
-        for (int i = 0; i < n; i++)
-        {
-            if (a[i] == 0)
-            {
-
-                ans += cnt1;
-            }
-            else
-            {
-
-                cnt1++;
-            }
-        }
-
-        return ans;
-    };
-    int n;
-    cin >> n;
-    vi v(n);
-    int fz = -1, fo = -1;
-    fr(n)
-    {
-        cin >> v[i];
-        if (v[i] == 0 && fz == -1)
-            fz = i;
-        else if (v[i] == 1)
-            fo = i;
-    }
-    int ans = mergeSort(v);
-    if (fz != -1)
-    {
-        auto vc = v;
-        vc[fz] = 1;
-        ans = max(ans, mergeSort(vc));
-    }
-    if (fo != -1)
-    {
-        auto vd = v;
-        vd[fo] = 0;
-        ans = max(ans, mergeSort(vd));
-    }
-    cout << ans << "\n";
+    
 }
 int32_t main()
 {

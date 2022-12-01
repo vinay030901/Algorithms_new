@@ -22,7 +22,7 @@ ListNode *reverseUsingDummy(ListNode *head)
         // but later it point to the previous node, so turning it or reversing it
         dummy = head; // then dummy will take the place of head and head will will placed further, that is next of it
         head = next;
-    
+    }
     return dummy;
 }
 void print(ListNode *head)
