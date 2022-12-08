@@ -1,14 +1,17 @@
-#include<stdio.h>
+#include <stdio.h>
 int main()
 {
-    int n;
-    printf("enter the size of array\n");
-    scanf("%d", 
-    &n);
-    int arr[n];
-    for(int i=0;i<n;i++) scanf("%d", &arr[i]);
-    int sum=0;
-    for(int i=0;i<n;i++)
-    sum+=arr[i];
-    printf("sum: %d\n",sum);
+    int i, m, n, sum = 0;
+    printf("enter the number");
+    scanf("%d", &n);
+    for (i = 1; i <= 10; i++)
+    {
+        m = n * i;
+        printf("%d * %d = %d\n", n, i, m);
+    }
+    for (i = 1; i <= 10; i++)
+    {
+        sum = sum + i;
+        printf("%d\n", sum);
+    }
 }

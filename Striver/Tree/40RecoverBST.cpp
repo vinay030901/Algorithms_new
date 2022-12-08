@@ -64,25 +64,23 @@ void recoverTree(TreeNode *root)
     second->val = temp;
 }
 
-
 // our next approach is using inorder traveral too
 // what we do is in the inorder traversal, we will check the condition if previous is greater than present root
 // if it is, we give values to them whether we find this condition for first time or second time
 // then we swap the values
-vector<TreeNode *> v;
-TreeNode *prev = NULL, *violation1 = NULL, *violation2 = NULL;
+TreeNode *previous = NULL, *violation1 = NULL, *violation2 = NULL;
 void findInorder(TreeNode *root)
 {
     if (root == NULL)
         return;
     findInorder(root->left);
-    if (prev != NULL and prev->val > root->val)
+    if (previous != NULL and previous->val > root->val)
     {
         if (violation1 == NULL)
-            violation1 = prev;
+            violation1 = previous;
         violation2 = root;
     }
-    prev = root;
+    previous = root;
     findInorder(root->right);
 }
 void recoverTree(TreeNode *root)

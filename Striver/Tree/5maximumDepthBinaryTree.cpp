@@ -65,3 +65,11 @@ int maxDepth(TreeNode *root)
 int main()
 {
 }
+int length(TreeNode *root)
+{
+    if (!root)
+        return 0;
+    int left = length(root->left);
+    int right = length(root->right);
+    return 1 + max(left, right);
+}

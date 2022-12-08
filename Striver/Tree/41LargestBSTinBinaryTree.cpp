@@ -165,12 +165,12 @@ int largestBst(Node *root)
 class NodeValue
 {
 public:
-    int maxNode, minNode, maxSize;
-    NodeValue(int minNode, int maxNode, int maxSize)
+    int maxNode, minNode, size;
+    NodeValue(int minNode, int maxNode, int size)
     {
         this->maxNode = maxNode;
         this->minNode = minNode;
-        this->maxSize = maxSize;
+        this->size = size;
     }
 };
 class Solution
@@ -186,15 +186,39 @@ public:
         if (left.maxNode < root->val and root->val < right.minNode)
         {
             // it is a valid bst
-            return NodeValue(min(root->val, left.minNode), max(root->val, right.maxNode), left.maxSize + right.maxSize + 1);
+            return NodeValue(min(root->val, left.minNode), max(root->val, right.maxNode), left.size + right.size + 1);
         }
 
         // if it isn't a valid bst
         // given such a range that they never be compared
-        return NodeValue(INT_MIN, INT_MAX, max(left.maxSize, right.maxSize));
+        return NodeValue(INT_MIN, INT_MAX, max(left.size, right.size));
     }
     int largestBSTSubtree(TreeNode *root)
     {
-        return helper(root).maxSize;
+        return helper(root).size;
+    }
+};
+
+struct TreeNode
+{
+    int val;
+    TreeNode *left, *right;
+};
+class Node
+{
+public:
+    NodeValue helper(TreeNode *node)
+    {
+        if (!node)
+            return NodeValue(INT_MAX, INT_MIN, 0);
+        NodeValue left = helper(node->left);
+        NodeValue right = helper(node->right);
+        if (left.maxNode < node->val && right.minNode > node->val)
+            return NodeValue(min(left.minNode, node->val), max(node->val, right.maxNode), left.size + right.size + 1);
+        return NodeValue(INT_MAX, INT_MIN, max(left.size, right.size));
+    }
+    int largestBST(TreeNode *node)
+    {
+        return helper(node).size;
     }
 };

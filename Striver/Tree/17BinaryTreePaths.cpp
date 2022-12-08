@@ -27,7 +27,6 @@ void findAllPaths(TreeNode *root, vector<string> &ans, string s)
 {
     if (root == NULL)
         return;
-
     // if string is empty, it means we are entering the first character and therefore don't need the arrow
     if (s.empty())
     {
@@ -44,7 +43,7 @@ void findAllPaths(TreeNode *root, vector<string> &ans, string s)
     if (root->left == NULL && root->right == NULL)
     {
         ans.push_back(s);
-        s = "";
+        //s = "";
     }
 
     // here we are using recursion, to check all the possible sides- left and right

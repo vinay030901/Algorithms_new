@@ -61,10 +61,5 @@ int main()
         temp->next=new ListNode(a);
         temp=temp->next;
     }
-    ListNode *reverse=Middle(head);
-    cout<<"reverse of list using 2N solution: ";
-    cout<<reverse->val<<" ";
-    ListNode *reverse1=Middle1(head);
-    cout<<"\nreverse of list using 2N solution: ";
-    cout<<reverse1->val<<" ";
+    
 }

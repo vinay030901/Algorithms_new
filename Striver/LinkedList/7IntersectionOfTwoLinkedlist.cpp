@@ -51,5 +51,3 @@ ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
 int main()
 {
 }
-
-ListNode *merge(ListNode *list1, ListNo)

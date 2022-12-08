@@ -14,8 +14,8 @@ struct ListNode
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 // first way is to create a new linkedlist and traverse both linkedlist together and add element using it
-// second way is that we will not take extra space, here we will traverse the list1 and when we find another element 
-// in list2, we will 
+// second way is that we will not take extra space, here we will traverse the list1 and when we find another element
+// in list2, we will
 ListNode *SortTwoList(ListNode *list1, ListNode *list2)
 {
     // first put all the values in the array and then sort the values, the put it another list and return that list
@@ -80,12 +80,12 @@ ListNode *SortTwoList(ListNode *list1, ListNode *list2)
 }
 ListNode *mergeTwoLists(ListNode *l1, ListNode *l2)
 {
-    //here we are doing it in constant space
+    // here we are doing it in constant space
     if (l1 == NULL)
         return l2;
     if (l2 == NULL)
         return l1;
-    // first of all we will start from l1 and connect all the nodes to l1, if the l2 value is less, then 
+    // first of all we will start from l1 and connect all the nodes to l1, if the l2 value is less, then
     // we will swap the lists and again do the same process, we will use a temp variable for this
     if (l1->val > l2->val)
         std::swap(l1, l2);
@@ -93,12 +93,12 @@ ListNode *mergeTwoLists(ListNode *l1, ListNode *l2)
     while (l1 != NULL && l2 != NULL)
     {
         ListNode *temp = NULL;
-        while (l1 != NULL && l1->val <= l2->val)// l1 is lesser than l2
+        while (l1 != NULL && l1->val <= l2->val) // l1 is lesser than l2
         {
             temp = l1;
             l1 = l1->next;
         }
-        temp->next = l2;// when l2 is less, connect temp to l2 and then swap the lists, that way temp will connected to l1
+        temp->next = l2; // when l2 is less, connect temp to l2 and then swap the lists, that way temp will connected to l1
         std::swap(l1, l2);
     }
     return res;
@@ -125,27 +125,27 @@ int main()
         temp->next = new ListNode(a);
         temp = temp->next;
     }
-    ListNode *sort = SortTwoList(head,temp);
+    ListNode *sort = SortTwoList(head, temp);
     print(sort);
 }
 
-ListNode *merge(ListNode *l1, ListNode * l2)
+ListNode *merge(ListNode *l1, ListNode *l2)
 {
-    if(!l1) return l2;
-    else if(!l2) return l1;
-    if(l1->val<=l2->val)
-    swap(l1, l2);
-    ListNode *res=l1;
-    while(l1 && l2)
+    if (!l1)
+        return l2;
+    if (!l2)
+        return l1;
+    ListNode *res = l1;
+    while (l1 and l2)
     {
-        ListNode *temp=NULL;
-        while(l1 && l1->val<=l2->val)
+        ListNode *temp = l1;
+        while (l1 and l1->val <= l2->val)
         {
-            temp=l1;
-            l1=l1->next;
+            temp = l1;
+            l1 = l1->next;
         }
-        temp->next=l2;
-        swap(l1,l2);
+        temp->next = l2;
+        std::swap(l1, l2);
     }
     return res;
 }

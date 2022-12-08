@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-struct ListNode {
+struct ListNode
+{
     int val;
     ListNode *next;
     ListNode() : val(0), next(nullptr) {}
@@ -8,21 +9,54 @@ struct ListNode {
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
-class Solution {
+class Solution
+{
 public:
-    bool isPalindrome(ListNode* head) {
-        string str="";
-        while(head!=NULL)
+    bool isPalindrome(ListNode *head)
+    {
+        string str = "";
+        while (head != NULL)
         {
-            str+=head->val;
-            head=head->next;
+            str += head->val;
+            head = head->next;
         }
-        string two=str;
-        reverse(str.begin(),str.end());
-        return two==str;
+        string two = str;
+        reverse(str.begin(), str.end());
+        return two == str;
     }
 };
+ListNode *reverse(ListNode *head)
+{
+    ListNode *dummy = NULL;
+    ListNode *cur = head;
+    while (cur != NULL)
+    {
+        ListNode *nex = cur->next;
+        cur->next = dummy;
+        dummy = cur;
+        cur = nex;
+    }
+    return dummy;
+}
+bool isPalindrome(ListNode *head)
+{
+    ListNode *temp = head, *fast = head, *slow = head;
+    while (fast->next != NULL && fast->next->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    slow->next = reverse(slow->next);
+    slow = slow->next;
+    while (slow != NULL)
+    {
+        if (slow->val != temp->val)
+            return false;
+        slow = slow->next;
+        temp = temp->next;
+    }
+    return true;
+}
 int main()
 {
-
 }

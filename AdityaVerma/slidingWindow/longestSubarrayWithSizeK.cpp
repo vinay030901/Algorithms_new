@@ -40,7 +40,7 @@ int lenOfLongSubarr(int arr[], int n, int k)
     {
         sum+=arr[i];
         mp[sum]=i;
-        if(mp.find(sum-arr[i])==mp.end())
+        if(mp.find(sum-arr[i])==mp.end());
         
     }
 }

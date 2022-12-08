@@ -30,7 +30,7 @@ int frogJumpMemoize(vector<int> energy, int n, vector<int> &dp)
 int frogJump(vector<int> energy, int n)
 {
     vector<int> dp(n + 1, -1);
-    return frogJumpMemoize(energy, n-1, dp);
+    return frogJumpMemoize(energy, n - 1, dp);
 }
 
 /*now, we will try to solve it using bottom up approach*/
@@ -46,7 +46,7 @@ int frogJumpBottomUp(vector<int> energy, int n)
             right = dp[i - 2] + abs(energy[i] - energy[i - 2]);
         dp[i] = min(left, right);
     }
-    return dp[n-1];
+    return dp[n - 1];
 }
 
 // space optimization case
@@ -54,7 +54,7 @@ int frogJumpSpaceOptimization(vector<int> energy, int n)
 {
     int prev1 = 0, prev2 = 0;
     for (int i = 1; i <= n; i++)
-    
+
     {
         int left = prev1 + abs(energy[i] - energy[i - 1]);
         int right = INT_MAX;

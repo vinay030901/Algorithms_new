@@ -74,7 +74,7 @@ TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
     return ans;
 }
 
-// we will use a traverasl technique for doing it in O(N) time and constant space
+// we will use a traversal technique for doing it in O(N) time and constant space
 TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
 {
     // what we do here is move in the tree and if we find other p and q, we will return the node

@@ -89,3 +89,8 @@ bool isBalanced(TreeNode *root)
 int main()
 {
 }
+
+int balanced(TreeNode *root){
+    if(!root) return 0;
+    
+}
