@@ -62,7 +62,6 @@ vector<vector<int>> verticalTraversal(TreeNode *root)
     if (root == NULL)
         return ans;
     queue<pair<TreeNode *, pair<int, int>>> q;
-    vector<pair<int, int>> v;
     q.push({root, {0, 0}});
     while (!q.empty())
     {

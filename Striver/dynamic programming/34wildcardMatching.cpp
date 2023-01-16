@@ -94,7 +94,7 @@ bool isMatchSpace(string s, string p)
 {
     int n = s.length(), m = p.length();
     vector<bool> prev(m + 1,false), cur(m + 1, false);
-    prev[0] = cur[j]=true;
+    prev[0] = cur[0]=true;
     for (int i = 1; i <= m; i++)
     {
         bool flag = true;

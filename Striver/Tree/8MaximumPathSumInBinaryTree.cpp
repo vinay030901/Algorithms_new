@@ -32,7 +32,6 @@ struct TreeNode
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
-
 // the solution of this question is like diameter of binary tree, where we found the max height of the node
 // here we are finding the max value 
 
