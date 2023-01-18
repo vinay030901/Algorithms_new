@@ -44,6 +44,7 @@ int recur(vector<int> &arr, int n, int k, vector<vector<int>> &dp)
         else
             return 0;
     }
+
     if (dp[n][k] != -1)
         return dp[n][k];
     int notTake = recur(arr, n - 1, k, dp);
@@ -55,7 +56,7 @@ int recur(vector<int> &arr, int n, int k, vector<vector<int>> &dp)
 int targetSum(int n, int target, vector<int> &arr)
 {
     int sum = accumulate(arr.begin(), arr.end(), 0);
-    if ((sum + target) % 2 != 0)
+    if ((sum + target) % 2 != 0 || (sum + target) < 0)
         return 0;
     target = (sum + target) / 2;
     vector<vector<int>> dp(n, vector<int>(target + 1, -1));

@@ -28,39 +28,40 @@ Top view of the above binary tree is
 using namespace std;
 struct TreeNode
 {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  int val;
+  TreeNode *left;
+  TreeNode *right;
+  TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 vector<int> TopView(TreeNode *root)
 {
-    // so we made use of map here, and like the previous question, we did level order traversal
-    // we had a queue which has col number as its first element, so it get sorted while the value is being input
-    map<int, int> mp;
-    vector<int> ans;
-    if (root == NULL)
-        return ans;
-    queue<pair<int, TreeNode *>> q;
-    q.push({0, root});
-    while (!q.empty())
-    {
-        auto p = q.front();
-        q.pop();
-        TreeNode *node = p.second;
-        int col = p.first;
-        if (mp.find(col) == mp.end())
-            mp[col] = node->val;
-        if (node->left)
-            q.push({col - 1, node->left});
-        if (node->right)
-            q.push({col + 1, node->right});
-    }
-    for (auto it : mp)
-        ans.push_back(it.second);
+  
+  // so we made use of map here, and like the previous question, we did level order traversal
+  // we had a queue which has col number as its first element, so it get sorted while the value is being input
+  map<int, int> mp;
+  vector<int> ans;
+  if (root == NULL)
     return ans;
+  queue<pair<int, TreeNode *>> q;
+  q.push({0, root});
+  while (!q.empty())
+  {
+    auto p = q.front();
+    q.pop();
+    TreeNode *node = p.second;
+    int col = p.first;
+    if (mp.find(col) == mp.end())
+      mp[col] = node->val;
+    if (node->left)
+      q.push({col - 1, node->left});
+    if (node->right)
+      q.push({col + 1, node->right});
+  }
+  for (auto it : mp)
+    ans.push_back(it.second);
+  return ans;
 }
 int main()
 {

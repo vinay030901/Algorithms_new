@@ -91,7 +91,7 @@ vector<int> distanceK(TreeNode *root, TreeNode *target, int k)
                 q.push(parent[current]);
                 visited[parent[current]] = true;
             }
-        }
+        } 
     }
     
     vector<int> result;
