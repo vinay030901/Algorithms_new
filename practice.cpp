@@ -45,12 +45,12 @@ const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ld EPS = 1e-9;
-static bool comparator(const pair<int, int> &a, const pair<int, int> &b)
-{
-    if (a.first == b.first)
-        return a.first > b.first;
-    return a.first > b.first;
-}
+// static bool comp(const pair<int, int> &a, const pair<int, int> &b)
+// {
+//     if (a.first == b.first)
+//         return a.first > b.first;
+//     return a.first > b.first;
+// }
 int findGCD(vector<int> &nums)
 {
     int maxi = *max_element(nums.begin(), nums.end()), mini = *min_element(nums.begin(), nums.end()), remain;
@@ -65,7 +65,15 @@ int findGCD(vector<int> &nums)
 const int mod = 998244353;
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    string str;
+    cin >> str;
+    string compare = "FBFFBFFBFBFFBFFBFBFFBFFBFBFFBFFB";
+    if (compare.find(str) != string::npos)
+        cout << "YES\n";
+    else
+        cout << "NO\n";
 }
 int32_t main()
 {
