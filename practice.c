@@ -1,7 +1,15 @@
 #include <stdio.h>
+void fun(int *top)
+{
+  *top = 20;
+}
+void fun1(int *b)
+{
+  *b = 10;
+}
 int main()
 {
-  int i=1;
-  printf("%d %d %d",i++,i,++i);
-
+  int a = 5;
+  fun(&a);
+  printf("a = %d\n", a);
 }
