@@ -14,28 +14,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define max 10
-void push(int *stack, int *top)
+void push(char *stack, char c, int *top)
 {
     if (*top == max - 1)
     {
         printf("\nStack overflow");
         return;
     }
-    int val;
-    printf("\nEnter the value: ");
-    scanf("%d", &val);
-    stack[++(*top)] = val;
+    stack[++(*top)] = c;
 }
-void pop(int *stack, int *top)
+int pop(char *stack, int *top)
 {
     if (*top == -1)
     {
         printf("\nStack underflow");
         return;
     }
-    printf("The popped element is %d", stack[(*top)--]);
+    return stack[(*top)--];
 }
-void display(int *stack, int *top)
+void display(char *stack, int *top)
 {
     if (*top == -1)
     {
@@ -45,7 +42,7 @@ void display(int *stack, int *top)
     for (int i = *top; i >= 0; i--)
         printf("%d ", stack[i]);
 }
-void peek(int *stack, int *top)
+void peek(char *stack, int *top)
 {
     if (*top == -1)
     {
@@ -54,33 +51,36 @@ void peek(int *stack, int *top)
     }
     printf("top element: %d ", stack[*top]);
 }
+int pred(char x)
+{
+    if (x == '^')
+        return 5;
+    if (x == '/' || x == '*')
+        return 4;
+    return 3;
+}
 int main()
 {
-    int stack[max], ch, top = -1;
-    printf("\t\tStack Data Structure");
-    do
+    char infix[max] = {}, postfix[max], stack[max];
+    int top = -1, i = 0, j = 0;
+    printf("Enter the infix expression: ");
+    gets(infix);
+    push(stack, '(', &top);
+    while (infix[i] != '.')
     {
-        printf("\nMenu: \n1. push\n2. pop\n3. display\n4. top\nEnter your choice: ");
-        scanf("%d", &ch);
-        switch (ch)
+        char ch = infix[i];
+        if (ch == '(')
+            push(stack, ch, &top);
+        else if (ch == '-' || ch == '+' || ch == '*' || ch == '/')
         {
-        case 1:
-            push(&stack[0], &top);
-            break;
-        case 2:
-            pop(&stack[0], &top);
-            break;
-        case 3:
-            display(&stack[0], &top);
-            break;
-        case 4:
-            peek(&stack[0], &top);
-            break;
-        case 5:
-            exit(0);
-            break;
-        default:
-            printf("invalid choice\n");
+            while (pred(ch) <= pred(stack[top]))
+                ch = pop(stack, &top);
+            postfix[j] = ch;
+            j++;
+            push(stack, ch, &top);
         }
-    } while (1);
+        else if (ch == ')')
+        {
+                }
+    }
 }

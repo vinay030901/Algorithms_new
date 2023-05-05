@@ -63,17 +63,26 @@ int findGCD(vector<int> &nums)
     return maxi;
 }
 const int mod = 998244353;
+int fun(int a, int b, int c)
+{
+    a--;
+    b--;
+    a = min(a, c - a - 1);
+    b = min(b, c - b - 1);
+    return min(a, b);
+}
+int happyShopping(vector<int> cost, vector<int> happiness, vector<int> min_quantity, vector<int> maxquantity, int m)
+{
+    int n = cost.size(), h = 0;
+    for (int i = 0; i < n; i++)
+    {
+        m -= cost[i] * min_quantity[i];
+        maxquantity[i] -= min_quantity[i];
+        h += happiness[i] * maxquantity[i];
+    }
+}
 void solve()
 {
-    int n;
-    cin >> n;
-    string str;
-    cin >> str;
-    string compare = "FBFFBFFBFBFFBFFBFBFFBFFBFBFFBFFB";
-    if (compare.find(str) != string::npos)
-        cout << "YES\n";
-    else
-        cout << "NO\n";
 }
 int32_t main()
 {
