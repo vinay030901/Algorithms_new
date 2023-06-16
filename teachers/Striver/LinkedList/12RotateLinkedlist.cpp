@@ -56,7 +56,6 @@ ListNode *rotateRight2(ListNode *head, int k)
     }
     k = k % length;
     temp->next = head;
-    k = length - k;
     while (k--)
     {
         temp = temp->next;

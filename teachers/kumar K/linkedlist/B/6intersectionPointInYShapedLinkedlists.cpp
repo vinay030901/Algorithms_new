@@ -1,0 +1,46 @@
+/*
+Given two linked lists sorted in increasing order, create a new linked list representing the intersection of the two linked lists. The new linked list should be made with its own memory the original lists should not be changed.
+Note: The linked list elements are not necessarily distinct.
+
+Example 1:
+
+Input:
+L1 = 1->2->3->4->6
+L2 = 2->4->6->8
+Output: 2 4 6
+Explanation: For the given first two
+linked list, 2, 4 and 6 are the elements
+in the intersection.
+Example 2:
+
+Input:
+L1 = 10->20->40->50
+L2 = 15->40
+Output: 40*/
+#include <bits/stdc++.h>
+using namespace std;
+
+struct ListNode
+{
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+class Solution
+{
+public:
+    int intersectPoint(ListNode *head1, ListNode *head2)
+    {
+        // Your Code Here
+        ListNode *a = head1, *b = head2;
+        while (a != b)
+        {
+            a = a == NULL ? head2 : a->next;
+            b = b == NULL ? head1 : b->next;
+        }
+        return a->val;
+    }
+};
