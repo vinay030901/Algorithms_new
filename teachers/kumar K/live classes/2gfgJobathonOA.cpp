@@ -36,10 +36,48 @@ So after 5 seconds N-1(4-1=3) robots die.*/
 
 #include <bits/stdc++.h>
 using namespace std;
-int main()
+int minTime(int n, vector<int> &h, vector<int> &p)
 {
-    vector<vector<string>> arr = {{"you", "we"}, {"have", "are"}, {"sleep", "eat", "drink"}};
-    for (int i = 0; i < arr.size(); i++)
+    // stack will store the bullet index and the number of bullets
+    stack<pair<int, int>> st;
+
+    // for each robot, we need how many bullets are needed to kill a robot
+    st.push({p[0], 100000000});
+    int i = 1, ans = 0;
+    while (i < n)
     {
+        int q = 0;
+        while (!st.empty() && h[i] > 0)
+        {
+            auto it = st.top();
+            int power = it.first, count = it.second;
+            // need: how many bullets will be needed
+            int need;
+            if (h[i] % power == 0)
+                need = h[i] / power;
+            else
+                need = h[i] / power + 1;
+            if (need <= count)
+            {
+                st.pop();
+                int leftover = count - need;
+                st.push({power, leftover});
+                q += need;
+                h[i] = 0;
+                // cout<<"first\n";
+            }
+            else
+            {
+                st.pop();
+                h[i] -= count * power;
+                q += count;
+                // cout<<"first2\n";
+            }
+            // cout<<need<<endl;
+        }
+        st.push({p[i], q});
+        ans = max(ans, q);
+        i++;
     }
+    return ans;
 }
