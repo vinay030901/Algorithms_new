@@ -45,12 +45,12 @@ const int MAX_N = 1e5 + 5;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ld EPS = 1e-9;
-// static bool comp(const pair<int, int> &a, const pair<int, int> &b)
-// {
-//     if (a.first == b.first)
-//         return a.first > b.first;
-//     return a.first > b.first;
-// }
+static bool comp(const pair<int, int> &a, const pair<int, int> &b)
+{
+    if (a.first == b.first)
+        return a.first > b.first;
+    return a.first > b.first;
+}
 int findGCD(vector<int> &nums)
 {
     int maxi = *max_element(nums.begin(), nums.end()), mini = *min_element(nums.begin(), nums.end()), remain;
@@ -70,16 +70,6 @@ int fun(int a, int b, int c)
     a = min(a, c - a - 1);
     b = min(b, c - b - 1);
     return min(a, b);
-}
-int happyShopping(vector<int> cost, vector<int> happiness, vector<int> min_quantity, vector<int> maxquantity, int m)
-{
-    int n = cost.size(), h = 0;
-    for (int i = 0; i < n; i++)
-    {
-        m -= cost[i] * min_quantity[i];
-        maxquantity[i] -= min_quantity[i];
-        h += happiness[i] * maxquantity[i];
-    }
 }
 void solve()
 {
