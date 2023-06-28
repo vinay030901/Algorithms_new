@@ -1,0 +1,133 @@
+Here are the 5 variations of Binary search for searching for an element in an sorted array.
+Few Insights first:
+With every iteration we reduce the search space by half.
+At every step we compare mid element with the target, if mid element is not the target then we proceed to the half where target if present should be at and discard the other half.
+After all the iterations when low == high, if target is present in the array then it should be present at low == high == mid , if not then we can surely say that target is not present in the array.
+Note this, for the very first time when low > high in that case ceil(target) = arr[low] and floor(target) = arr[high].
+1. The usual solution
+class Solution {
+    public int search(int[] nums, int target) {
+        int n = nums.length;
+        int low = 0;
+        int high = n - 1;
+        
+        while (low <= high) {
+            int mid = (low + high) / 2; // this may cause integer overflow
+			if (nums[mid] == target)
+				return mid;
+            else if (nums[mid] < target)
+                low = mid + 1;
+            else
+                high = mid - 1;
+        }
+        
+        return -1;
+    }
+}
+
+2. Round down
+class Solution {
+    public int search(int[] nums, int target) {
+        int n = nums.length;
+        int low = 0;
+        int high = n - 1;
+        
+        while (low <= high) {
+            int mid = low + (high - low) / 2; // round down (eliminates integer overflow)
+			if (nums[mid] == target)
+				return mid;
+            else if (nums[mid] < target)
+                low = mid + 1;
+            else
+                high = mid - 1;
+        }
+        
+        return -1;
+    }
+}
+
+3. Round up
+class Solution {
+    public int search(int[] nums, int target) {
+        int n = nums.length;
+        int low = 0;
+        int high = n - 1;
+        
+        while (low <= high) {
+            int mid = low + (high - low + 1) / 2; // round up (eliminates integer overflow)
+			if (nums[mid] == target)
+				return mid;
+            else if (nums[mid] < target)
+                low = mid + 1;
+            else
+                high = mid - 1;
+        }
+        
+        return -1;
+    }
+}
+
+NOTE: Round up and Round down yields different results when size of search space is even, because mid in case of even number of elements is not clearly defined, so round down makes left element as mid and round up makes right element as mid.
+Gets Tricky now
+In below two variations we do not compare the mid element with the target. The only comparison we make is when we get out of the loop (i.e exhausted our search space completely).
+Mid may be the target so we keep mid element in our search space and search space will eventually shrink down to that original mid if it was an equal target (of course guaranteed only if duplicates were not present).
+4. Round down no comparison
+class Solution {
+    public int search(int[] nums, int target) {
+        int n = nums.length;
+        int low = 0;
+        int high = n - 1;
+        
+        while (low < high) { // notice we do not compare element at mid with our target
+            int mid = low + (high - low) / 2;
+            if (nums[mid] >= target)
+                high = mid;
+            else
+                low = mid + 1;
+        }
+        
+		 /* at this point our search space has shrinked to 
+		only one element if current element is the target element
+		then return its index else we can safely assume that element was not found*/
+		
+        return nums[low] == target ? low : -1; // low == high
+    }
+}
+
+5. Round up no comparison
+class Solution {
+    public int search(int[] nums, int target) {
+        int n = nums.length;
+        int low = 0;
+        int high = n - 1;
+        
+        while (low < high) { // notice we do not compare element at mid with our target
+            int mid = low + (high - low + 1) / 2;
+            if (nums[mid] <= target)
+                low = mid;
+            else
+                high = mid - 1;
+        }
+		
+        /* at this point our search space has shrinked to 
+		only one element if current element is the target element
+		then return its index else we can safely assume that element was not found*/
+		
+		return nums[low] == target ? low : -1;  // low == high
+    }
+}
+
+Where is this kind of binary search used?
+Well a very good application of these two variations is in finding pivot in an rotated sorted array.
+Code for finding pivot(minimum) element in an rotated sorted array.
+ 
+Note : Left snippet does not handle duplicates. A slight modification in the code (right snippet) can handle duplicates as well.
+EDIT 1 : On suggestions given by @ashutoshsr and @Akash1408, I am adding few question to practise, although I also want to point
+out that these variations aren't explicit, two or more variations can work on the same questions. The only difference between them is the way comparisons are made and how search space is shrinked. In the first three variations we compare at each iteration but in the last two we make comparison only once, when we have looked for all the potential positions.
+Can you explain how you come up with this equation in the round up case int mid = low + (high - low + 1) / 2?
+
+In the above image since the number of elements is even so mid does not point to any element so to make it point to an element either left (index 2) or right (index 3) we have two formulas.
+In mid = low + (high - low) / 2 it is equivalent to saying mid = low + floor((high - low) / 2) but due to floor division in integers we don't have to write it explicitly.
+In mid = low + (high - low + 1) / 2 it is equivalent to saying mid = low + ceil((high - low) / 2) but due to floor division in integers we have to first add 1 to high - low then divide it by 2.
+
+Both the formulas give the same mid if the number of elements is odd.
