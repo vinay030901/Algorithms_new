@@ -13,9 +13,20 @@ void findSum(vector<int> &arr, int i)
     cout << sum;
 }
 
-//
+// we will use dp for this part
+// here we will calculate the sum of elements at every point and store it
 int main()
 {
-
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+    vector<int> dp(n);
+    dp[0] = arr[0];
+    for (int i = 1; i < n; i++)
+        dp[i] = dp[i - 1] + arr[i];
+    // so the total time for optimized way is O(N*Q) time
+    cout << dp[3]; // in O(1)
     return 0;
 }
