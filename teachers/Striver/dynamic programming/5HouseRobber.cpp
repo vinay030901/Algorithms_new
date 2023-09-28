@@ -43,7 +43,7 @@ int rob(vector<int> &arr)
 {
     int n = arr.size();
     vector<int> dp(n + 1, -1);
-    cout << robRecur(arr, n, dp);
+    cout << robRecur(arr, n - 1, dp);
 }
 
 // BOTTOM UP APPROACH
