@@ -3,7 +3,7 @@ using namespace std;
 int main()
 {
 
-    //int arr[] = {2, 3, -7, 0, 3, -4, 5};
+    int arr[] = {2, 3, -7, 0, 3, -4, 5};
     int n = sizeof(arr) / sizeof(arr[0]);
 
     // so, our claim here is that the answer is lying in subarray from starting or from ending
