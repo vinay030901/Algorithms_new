@@ -38,7 +38,7 @@ struct TreeNode
 // we prev as next now, to compare it with the upcoming value
 // if it isn't, we make ans false and return
 bool ans = true;
-long long pre = -215748968, nex;
+long long previous = -215748968, nex;
 void inorder(TreeNode *root)
 {
     if (root == NULL)
@@ -60,4 +60,21 @@ bool isValidBST(TreeNode *root)
 {
     inorder(root);
     return ans;
+}
+
+bool fun(TreeNode *root, TreeNode *&prev)
+{
+    if (!root)
+        return true;
+    if (!fun(root->left, prev))
+        return false;
+    if (prev && prev->val >= root->val)
+        return false;
+    prev = root;
+    return fun(root->right, prev);
+}
+bool isValidBST(TreeNode *root)
+{
+    TreeNode *prev = NULL;
+    return fun(root, prev);
 }

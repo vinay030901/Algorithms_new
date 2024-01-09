@@ -1,3 +1,6 @@
 {
-  "recommendations": ["visualstudioexptteam.vscodeintellicode"]
+  "recommendations": [
+    "visualstudioexptteam.vscodeintellicode",
+    "wesbos.theme-cobalt2"
+  ]
 }

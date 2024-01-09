@@ -32,7 +32,7 @@ int findPar(int u, vector<int> &parent)
     return findPar(parent[u], parent);
 }
 
-void unionn(int u, int v, vector<int> &parent, vector <int> &rank)
+void unionn(int u, int v, vector<int> &parent, vector<int> &rank)
 {
     u = findPar(u, parent);
     v = findPar(v, parent);
@@ -60,21 +60,22 @@ int main()
     }
     sort(edge.begin(), edge.end(), comp); // we first sort the data structure
 
-    vector<int> parent(n),rank(n,0);
+    vector<int> parent(n), rank(n, 0);
     for (int i = 0; i < n; i++)
         parent[i] = i;
-    int cost=0;
-    vector<pair<int,int>>mst;
+    int cost = 0;
+    vector<pair<int, int>> mst;
 
-    for(auto it:edge)
+    for (auto it : edge)
     {
-        if(findPar(it.u,parent)!=findPar(it.v,parent)) // if they don't have common component, then we join then
+        if (findPar(it.u, parent) != findPar(it.v, parent)) // if they don't have common component, then we join then
         {
-            cost+=it.wt;
-            mst.push_back({it.u,it.v});
-            unionn(it.u,it.v,parent,rank);
+            cost += it.wt;
+            mst.push_back({it.u, it.v});
+            unionn(it.u, it.v, parent, rank);
         }
     }
-    cout<<"cost is: "<<cost<<endl;
-    for(auto it:mst) cout<<it.first<<" - "<<it.second<<endl;
+    cout << "cost is: " << cost << endl;
+    for (auto it : mst)
+        cout << it.first << " - " << it.second << endl;
 }

@@ -40,3 +40,4 @@ int coinChange(vector<int> &arr, int sum)
         }
     }
     return dp[n][sum] >= 1e6 ? -1 : dp[n][sum];
+}

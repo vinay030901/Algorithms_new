@@ -31,3 +31,27 @@ vector<string> generateParenthesis(int n)
     count(n, n, str);
     return ans;
 }
+
+// solution without if condition
+vector<string> ans;
+void generate(string str, int s, int e)
+{
+    if (!s && !e)
+    {
+        ans.push_back(str);
+        return;
+    }
+    if (s < e)
+    {
+        if (s)
+            generate(str + "(", s - 1, e);
+        generate(str + ")", s, e - 1);
+    }
+    else if (s == e)
+        generate(str + "(", s - 1, e);
+}
+vector<string> generateParenthesis(int n)
+{
+    generate("", n, n);
+    return ans;
+}

@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
+// it has two important conditions
+// 1. when the middle is bigger than the first element-> means the array is sorted in that part: so we will check if the target is between firt and middle element
+// 2. when the middle is smaller than the first element-> means the array is sorted in second half: so we will check for rigtht and middle element
 int search(vector<int> &arr, int target)
 {
     int l = 0, h = arr.size() - 1;
