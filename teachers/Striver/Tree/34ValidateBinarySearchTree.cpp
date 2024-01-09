@@ -38,16 +38,16 @@ struct TreeNode
 // we prev as next now, to compare it with the upcoming value
 // if it isn't, we make ans false and return
 bool ans = true;
-long long prev = -215748968, nex;
+long long pre = -215748968, nex;
 void inorder(TreeNode *root)
 {
     if (root == NULL)
         return;
     inorder(root->left);
     nex = root->val;
-    if (nex > prev)
+    if (nex > pre)
     {
-        prev = next;
+        pre = nex;
     }
     else
     {
