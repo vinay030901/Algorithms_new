@@ -51,4 +51,3 @@ vector<int> inorderTraversal(TreeNode *root)
     }
     return ans;
 }
-

@@ -45,9 +45,9 @@ void inorder(TreeNode *root)
         return;
     inorder(root->left);
     nex = root->val;
-    if (nex > pre)
+    if (nex > previous)
     {
-        pre = nex;
+        previous = nex;
     }
     else
     {
