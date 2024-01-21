@@ -1,7 +1,7 @@
 /*
 Given the head of a singly linked list and two integers left and right where left <= right, reverse the nodes of the list from position left to position right, and return the reversed list.
 
- 
+
 
 Example 1:
 
@@ -12,7 +12,7 @@ Example 2:
 
 Input: head = [5], left = 1, right = 1
 Output: [5]
- 
+
 
 Constraints:
 
@@ -32,19 +32,20 @@ struct ListNode
 };
 ListNode *reverseBetween(ListNode *head, int left, int right)
 {
-    if(head==NULL || head->next==NULL) return head;
+    if (head == NULL || head->next == NULL)
+        return head;
 
     ListNode *dummy = new ListNode(-1);
-    dummy->next=head;
-    ListNode *it=dummy;
-    ListNode *prevIt=NULL;
+    dummy->next = head;
+    ListNode *it = dummy;
+    ListNode *prevIt = NULL;
     for (int i = 0; i < left; i++)
     {
-        prevIt=it;
-        it=it->next;
+        prevIt = it;
+        it = it->next;
     }
-    ListNode *itR=it;
-    ListNode *prevR=prevIt;
+    ListNode *itR = it;
+    ListNode *prevR = prevIt;
     while (left <= right)
     {
         ListNode *n = itR->next;
@@ -53,8 +54,8 @@ ListNode *reverseBetween(ListNode *head, int left, int right)
         itR = n;
         left++;
     }
-    prevIt->next=prevR;
-    it->next=itR;
+    prevIt->next = prevR;
+    it->next = itR;
     return dummy->next;
 }
 int main()

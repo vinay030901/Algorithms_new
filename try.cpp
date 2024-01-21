@@ -1,62 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
-int timeToMinutes(string time)
+void decodeSequence(string str)
 {
-    int hours, minutes;
-    string meridian;
-
-    stringstream ss(time);
-    ss >> hours;
-    ss.ignore(1, ':');
-    ss >> minutes;
-    ss >> meridian;
-
-    if (meridian == "pm" && hours != 12)
+    unordered_map<string, string> mp;
+    mp["001"] = "C";
+    mp["010"] = "G";
+    mp["011"] = "A";
+    mp["101"] = "T";
+    mp["110"] = "U";
+    bool dna = false;
+    if (str[0] == '0')
+        dna = true;
+    string ans = "";
+    for (int i = 3; i <= str.length(); i += 3)
     {
-        hours += 12;
+        string s = str.substr(i, 3);
+        if (mp[s] == "T" || mp[s] == "U")
+        {
+            if (dna)
+                ans += "T";
+            else
+                ans += "U";
+        }
+        else
+            ans += mp[s];
     }
-    else if (meridian == "am" && hours == 12)
-    {
-        hours = 0;
-    }
-
-    return hours * 60 + minutes;
+    cout << ans;
 }
-int calculateTimeDifference(string timeRange)
-{
-    size_t dashPos = timeRange.find('-');
-    string time1 = timeRange.substr(0, dashPos);
-    string time2 = timeRange.substr(dashPos + 1);
-
-    int minutes1 = timeToMinutes(time1);
-    int minutes2 = timeToMinutes(time2);
-
-    if (minutes2 < minutes1)
-    {
-        minutes2 += 24 * 60; // Add 24 hours if transitioning to the next day
-    }
-
-    return minutes2 - minutes1;
-}
-// string fun(int arr[], int n)
-// {
-//     int a = arr[0];
-//     string str = "";
-//     for (int i = a; i < n; i++)
-//         str += to_string(arr[i]);
-//     for (int i = 0; i < a; i++)
-//         str += to_string(arr[i]);
-//     return str;
-// }
 int main()
 {
-    // int n;
-    // cin >> n;
-    // int arr[n];
-    // for (int i = 0; i < n; i++)
-    //     cin >> arr[i];
-    // cout << fun(arr, n) << endl;
     string str;
     cin >> str;
-    cout << calculateTimeDifference(str);
+    decodeSequence(str);
 }

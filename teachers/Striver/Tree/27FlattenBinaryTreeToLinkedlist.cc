@@ -2,7 +2,7 @@
 
 The "linked list" should use the same TreeNode class where the right child pointer points to the next node in the list and the left child pointer is always null.
 The "linked list" should be in the same order as a pre-order traversal of the binary tree.
- 
+
 
 Example 1:
 
@@ -29,13 +29,14 @@ struct TreeNode
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
-TreeNode *prev=NULL;
-void flatten(TreeNode* root)
+TreeNode *pre = NULL;
+void flatten(TreeNode *root)
 {
-    if(root==NULL) return;
+    if (root == NULL)
+        return;
     flatten(root->right);
     flatten(root->left);
-    root->right=prev;
-    root->left=NULL;
-    prev=root;
+    root->right = pre;
+    root->left = NULL;
+    pre = root;
 }
