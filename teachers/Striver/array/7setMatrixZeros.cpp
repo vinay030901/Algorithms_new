@@ -30,33 +30,35 @@ int main()
     //     if (col0 == 0)
     //         matrix[i][0] = 0;
     // }
-    for(int i=0;i<row;i++)
-    for(int j=0;j<col;j++)
-    {
-        if(matrix[i][j]==0)
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < col; j++)
         {
-            for(int k=0;k<row;k++)
+            if (matrix[i][j] == 0)
             {
-                if(matrix[k][j]!=0)
+                for (int k = 0; k < row; k++)
                 {
-                    matrix[k][j]=-1;
+                    if (matrix[k][j] != 0)
+                    {
+                        matrix[k][j] = -1;
+                    }
                 }
-            }
-            for(int k=0;k<col;k++)
-            {
-                if(matrix[i][k]!=0)
+                for (int k = 0; k < col; k++)
                 {
-                    matrix[i][k]=-1;
+                    if (matrix[i][k] != 0)
+                    {
+                        matrix[i][k] = -1;
+                    }
                 }
             }
         }
-    }
-    for(int i=0;i<row;i++)
+    for (int i = 0; i < row; i++)
     {
-        for(int j=0;j<col;j++)
-        if(matrix[i][j]==0 || matrix[i][j]==-1) cout<<"0 ";
-        else cout<<matrix[i][j]<<" ";
-        cout<<endl;
+        for (int j = 0; j < col; j++)
+            if (matrix[i][j] == 0 || matrix[i][j] == -1)
+                cout << "0 ";
+            else
+                cout << matrix[i][j] << " ";
+        cout << endl;
     }
     // for (int i = 0; i < row; i++)
     // {
