@@ -1,35 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
-void decodeSequence(string str)
+int recur(int i, int j, int N, vector<int> &arr, vector<vector<int>> &dp)
 {
-    unordered_map<string, string> mp;
-    mp["001"] = "C";
-    mp["010"] = "G";
-    mp["011"] = "A";
-    mp["101"] = "T";
-    mp["110"] = "U";
-    bool dna = false;
-    if (str[0] == '0')
-        dna = true;
-    string ans = "";
-    for (int i = 3; i <= str.length(); i += 3)
+    if (i == N)
+        return 0;
+    if (dp[i][j] != -10001)
+        return dp[i][j];
+    if (j == 0)
     {
-        string s = str.substr(i, 3);
-        if (mp[s] == "T" || mp[s] == "U")
-        {
-            if (dna)
-                ans += "T";
-            else
-                ans += "U";
-        }
-        else
-            ans += mp[s];
+        return dp[i][j] = max(arr[i] * 2 + recur(i + 1, 1, N, arr, dp), arr[i] / 2 + recur(i + 1, 2, N, arr, dp));
     }
-    cout << ans;
+    else if (j == 1)
+    {
+        return dp[i][j] = max(arr[i] + 2 + recur(i + 1, 0, N, arr, dp), arr[i] / 2 + recur(i + 1, 2, N, arr, dp));
+    }
+    return dp[i][j] = max(arr[i] + 2 + recur(i + 1, 0, N, arr, dp), arr[i] * 2 + recur(i + 1, 1, N, arr, dp));
+}
+int solve(int N, vector<int> A)
+{
+    vector<vector<int>> dp(N + 1, vector<int>(4, -10001));
+    int add = A[0] + 2 + recur(1, 0, N, A, dp);
+    int mul = A[0] * 2 + recur(1, 1, N, A, dp);
+    int div = A[0] / 2 + recur(1, 2, N, A, dp);
+    return max(add, max(div, mul));
 }
 int main()
 {
-    string str;
-    cin >> str;
-    decodeSequence(str);
+    int n;
+    cin >> n;
+    vector<int> A(n);
+    for (int i = 0; i < n; i++)
+        cin >> A[i];
+    cout << solve(n, A) << endl;
+    return 0;
 }
