@@ -20,6 +20,52 @@ The number of nodes in the list is in the range [1, 5 * 104].
 1 <= Node.val <= 1000*/
 #include <bits/stdc++.h>
 using namespace std;
+struct ListNode
+{
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+};
+ListNode *reverse(ListNode *cur)
+{
+    ListNode *prev = NULL;
+    while (cur)
+    {
+        ListNode *nex = cur->next;
+        cur->next = prev;
+        prev = cur;
+        cur = nex;
+    }
+    return prev;
+}
+void reorderList(ListNode *head)
+{
+    if (!head || !head->next || !head->next->next)
+        return;
+    ListNode *slow = head;
+    ListNode *fast = head;
+    while (fast && fast->next)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    ListNode *rev = reverse(slow);
+    ListNode *l = head->next;
+    for (int i = 0; l != rev; i++, head = head->next)
+    {
+        if (i & 1)
+        {
+            head->next = l;
+            l = l->next;
+        }
+        else
+        {
+            head->next = rev;
+            rev = rev->next;
+        }
+    }
+}
 int main()
 {
     // Your code here
