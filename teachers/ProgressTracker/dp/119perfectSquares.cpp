@@ -20,6 +20,36 @@ Constraints:
 1 <= n <= 104*/
 #include <bits/stdc++.h>
 using namespace std;
+int numSquares(int n)
+{
+    queue<int> q;
+    q.push(0);
+    unordered_set<int> vis;
+    vis.insert(0);
+    int step = 0;
+    while (!q.empty())
+    {
+        int size = q.size();
+        step++;
+        while (size--)
+        {
+            int cur = q.front();
+            q.pop();
+            for (int i = 0; i * i <= n - cur; i++)
+            {
+                int var = cur + i * i;
+                if (var == n)
+                    return step;
+                if (vis.find(var) == vis.end())
+                {
+                    vis.insert(var);
+                    q.push(var);
+                }
+            }
+        }
+    }
+    return step;
+}
 // https://leetcode.com/problems/perfect-squares/discuss/71488/Summary-of-4-different-solutions-(BFS-DP-static-DP-and-mathematics)
 // ALSO TECHDOSE
 bool issquare(int n)
