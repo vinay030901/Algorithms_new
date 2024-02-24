@@ -1,0 +1,21 @@
+OR function: it is used to switch on the bits
+so, a | 0 = a and a | 1 =1 
+since 0|0=0 and 0|1=1, 1|0=1 and 1|1=1
+
+AND function: it used to switch off the bits
+so a & 0 = 0 and a&1=a
+
+XOR function: it is used to toggle the bits
+a  ^ 1 = ~a and a ^ 0 = a.
+1^0 = 1 and 1^1 = 0 , 0^1 = 1 and 0^0 = 0
+
+left shift : shift the bits to left n times, and 0 to the right
+
+right shift(>>): shift the bits to the right n times, and on the right, the added bits are equal to msb
+right shift(>>>): the added bits are equal to 0 only
+
+
+ON the nth bit- we can do or, so x=10110101, then we can do an OR with a mask such as 00001000. To make this mask, we can do left shift 000000001 n times
+OFF the nth bit- we can do AND, so x=10110101, then make mask like 11110111. left shift 000000001 n times and then do ~, to make all 1s 0 and 0 to 1
+TOGGLE: then use mask 000010000, and do XOR operation
+check if ON or OFF: use mask like above and do AND operation. so x&mask is all 0, then bit is off else it was set.                           
