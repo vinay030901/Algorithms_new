@@ -19,3 +19,20 @@ vector<vector<int>> subsets(vector<int> &arr)
     fun(0, arr, v, arr.size());
     return ans;
 }
+vector<vector<int>> subsetsq(vector<int> &arr)
+{
+    int n = arr.size();
+    int subsetsCount = 1 << n;
+    vector<vector<int>> ans;
+    for (int i = 0; i < subsetsCount; i++)
+    {
+        vector<int> v;
+        for (int j = 0; j < j; j++)
+        {
+            if (i & (1 << j))
+                v.push_back(arr[j]);
+        }
+        ans.push_back(v);
+    }
+    return ans;
+}

@@ -45,6 +45,25 @@ vector<vector<int>> subsetsWithDup(vector<int> &arr)
     generate(arr, 0, ds, ans);
     return ans;
 }
+vector<vector<int>> subsetsWithDup1(vector<int> &arr)
+{
+    int n = arr.size();
+    int subsetsCount = (1 << n);
+    set<vector<int>> ans;
+    for (int i = 0; i < subsetsCount; i++)
+    {
+        vector<int> v;
+        for (int j = 0; j < n; j++)
+        {
+            if (i & (1 << j))
+                v.push_back(arr[j]);
+        }
+        sort(v.begin(), v.end());
+        ans.insert(v);
+    }
+    vector<vector<int>> answer(ans.begin(), ans.end());
+    return answer;
+}
 int main()
 {
     // Your code here
