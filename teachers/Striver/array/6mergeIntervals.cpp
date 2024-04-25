@@ -3,14 +3,14 @@
 using namespace std;
 int main()
 {
-    vector<pair<int, int>> intervals{{1, 3}, {2, 6}, {8, 10}, {8, 9}, {9, 11}, {15, 18}, {2, 4}, {16, 17}};
+    vector<pair<int, int>> intervals = {{1, 3}, {2, 6}, {8, 10}, {8, 9}, {9, 11}, {15, 18}, {2, 4}, {16, 17}};
     sort(intervals.begin(), intervals.end());
     vector<pair<int, int>> newIntervals;
-    for (auto i = 0; i < intervals.size(); i++)
+    for (int i = 0; i < intervals.size(); i++)
     {
         cout << intervals[i].first << " " << intervals[i].second << "\n";
     }
-    for (int i = 0; i <= intervals.size(); i++)
+    for (int i = 0; i < intervals.size() - 1; i++)
     {
         if (intervals[i].second > intervals[i + 1].first)
         {
@@ -20,6 +20,7 @@ int main()
         else
             newIntervals.push_back(make_pair(intervals[i].first, intervals[i].second));
     }
+    newIntervals.push_back(intervals[intervals.size() - 1]);
     cout << "the overlapped intervals are: ";
     for (int i = 0; i < newIntervals.size(); i++)
     {

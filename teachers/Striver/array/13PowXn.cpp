@@ -1,6 +1,9 @@
 // find pow(x,n)
 #include <bits/stdc++.h>
 using namespace std;
+/*for example we need to calculate 3 power 13, then 13 could be divided into 13=8+4+1
+so we just need 3 power 8 * 3 power 4 and 3 power 1 to get our answer
+*/
 int main()
 {
     int x = 2, n = 10;

@@ -1,59 +1,81 @@
-/*count the inversion in an array
-two elements a[i] and a[j] form an inversion if a[i]>a[j] and i<j
-
-one approach might be the brute force approach where we can traverse the whole array and check the elements of size less that it
-on the right side of the array, but it will take O(n^2) time
-
-our approach is using merge sort, we count the inversions, time complexity is O(NlogN)*/
-
 #include <bits/stdc++.h>
 using namespace std;
-int merge(int arr[], int temp[], int left, int mid, int right)
+
+int merge(vector<int> &arr, int low, int mid, int high)
 {
-    int i = left, j = mid, k = left;
-    int inv = 0;
-    while (i <= mid && j <= right)
+    vector<int> temp;    // temporary array
+    int left = low;      // starting index of left half of arr
+    int right = mid + 1; // starting index of right half of arr
+
+    // Modification 1: cnt variable to count the pairs:
+    int cnt = 0;
+
+    // storing elements in the temporary array in a sorted manner//
+
+    while (left <= mid && right <= high)
     {
-        if (arr[i] <= arr[j])
+        if (arr[left] <= arr[right])
         {
-            temp[k++] = arr[i++];
+            temp.push_back(arr[left]);
+            left++;
         }
         else
         {
-            temp[k++] = arr[j++];
-            inv += (mid - i + 1);
+            temp.push_back(arr[right]);
+            cnt += (mid - left + 1); // Modification 2
+            right++;
         }
     }
-    while (i <= mid)
+
+    // if elements on the left half are still left //
+
+    while (left <= mid)
     {
-        temp[k++] = arr[i++];
+        temp.push_back(arr[left]);
+        left++;
     }
-    while (j <= right)
+
+    //  if elements on the right half are still left //
+    while (right <= high)
     {
-        temp[k++] = arr[j++];
+        temp.push_back(arr[right]);
+        right++;
     }
-    for (int l = left; l <= right; l++)
-        arr[l] = temp[l - left];
-    return inv;
+
+    // transfering all elements from temporary to arr //
+    for (int i = low; i <= high; i++)
+    {
+        arr[i] = temp[i - low];
+    }
+
+    return cnt; // Modification 3
 }
-int mergeSort(int arr[], int temp[], int left, int right)
+
+int mergeSort(vector<int> &arr, int low, int high)
 {
-    int inv = 0;
-    if (left < right)
-    {
-        int mid = (left + right) / 2;
-        inv += mergeSort(arr, temp, left, mid);
-        inv += mergeSort(arr, temp, mid + 1, right);
-        inv += merge(arr, temp, left, mid, right);
-    }
-    return inv;
+    int cnt = 0;
+    if (low >= high)
+        return cnt;
+    int mid = (low + high) / 2;
+    cnt += mergeSort(arr, low, mid);      // left half
+    cnt += mergeSort(arr, mid + 1, high); // right half
+    cnt += merge(arr, low, mid, high);    // merging sorted halves
+    return cnt;
 }
+
+int numberOfInversions(vector<int> &a, int n)
+{
+
+    // Count the number of pairs:
+    return mergeSort(a, 0, n - 1);
+}
+
 int main()
 {
-    int arr1[] = {5, 3, 2, 4, 1};
-    int arr[] = {1, 2, 0};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int temp[n];
-    int inv = mergeSort(arr, temp, 0, n - 1);
-    cout << inv;
+    vector<int> a = {5, 4, 3, 2, 1};
+    int n = 5;
+    int cnt = numberOfInversions(a, n);
+    cout << "The number of inversions are: "
+         << cnt << endl;
+    return 0;
 }
