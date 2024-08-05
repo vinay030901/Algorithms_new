@@ -43,12 +43,12 @@ void combination(int arr[], int ind, int sum, int n, vector<int> &v)
         else
             return;
     }
-    if (sum > arr[ind]) // so if sum is more than element, that means we won't reach negative, we will push the element into the 
+    if (sum > arr[ind]) // so if sum is more than element, that means we won't reach negative, we will push the element into the
     // vector and therefore now send decreased value of sum here.
     {
         v.push_back(arr[ind]);
         combination(arr, ind, sum - arr[ind], n, v);
-        v.pop_back(); // here we will pop back when the call is complete, if didn't make the call, there's no need for this to call, 
+        v.pop_back(); // here we will pop back when the call is complete, if didn't make the call, there's no need for this to call,
         // therefore this is under if condition
     }
     combination(arr, ind + 1, sum, n, v); // if we don't take the element, we can simply move forward

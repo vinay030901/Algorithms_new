@@ -1,33 +1,39 @@
 #include <bits/stdc++.h>
 using namespace std;
-cv::Mat outputLabels, stats, img_color, centroids;
+
+int fun(int n, int s, int w, int k, vector<int> &arr, int i, vector<int> &dp)
+{
+    if (i >= n)
+        return 0;
+
+    if (dp[i] != -1)
+        return dp[i];
+    int sprinkle = INT_MAX;
+    if (i + k - 1 < n)
+    {
+        sprinkle = w + fun(n, s, w, k, arr, i + k);
+    }
+    int swapping = INT_MAX;
+    if (i + 1 < n)
+    {
+        swap(arr[i], arr[i + 1]);
+        swapping = k + fun(n, s, w, k, arr, i + 1, dp);
+        swap(arr[i], arr[i + 1]);
+    }
+    int water = arr[i] + fun(n, s, w, k, arr, i + 1, dp);
+    return dp[i] = min(water, min(sprinkle, swapping));
+}
+int plantGrowingContest(int n, int k, int w, int s, vector<int> &arr, vector<int> &dp)
+{
+    return fun(n, s, w, k, arr, 0, dp);
+}
 int main()
 {
-
-    int numberofComponents = cv::connectedComponentsWithStats(bwImage, outputLabels,
-                                                              stats, centroids, connectivity);
-
-    std::vector<cv::Vec3b> colors(numberofComponents + 1);
-    colors[i] = cv::Vec3b(rand() % 256, rand() % 256, rand() % 256);
-
-    // do not count the original background-> label = 0:
-    colors[0] = cv::Vec3b(0, 0, 0);
-
-    // Area threshold:
-    int minArea = 10; // 10 px
-
-    for (int i = 1; i <= numberofComponents; i++)
-    {
-
-        // get the area of the current blob:
-        auto blobArea = stats.at<int>(i - 1, cv::CC_STAT_AREA);
-
-        // apply the area filter:
-        if (blobArea < minArea)
-        {
-            // filter blob below minimum area:
-            // small regions are painted with (ridiculous) pink color
-            colors[i - 1] = cv::Vec3b(248, 48, 213);
-        }
-    }
+    int n, k, w, s;
+    cin >> n >> k >> w >> s;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+    vector<int> dp(n + 1, -1);
+    cout << plantGrowingContest(n, k, w, s, arr, dp);
 }
